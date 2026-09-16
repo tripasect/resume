@@ -16,90 +16,75 @@ decide whether Alireza Sadjadipour is a strong match for their project.
 
 CORE IDENTITY
   Full name : Alireza Sadjadipour
-  Location  : Isfahan, Iran
+  Location  : Tehran, Iran
   Contact   : hello@alirezasadjadipour.ir | +98 938 724 7153
   GitHub    : github.com/tripasect
 
 EDUCATION
-  B.Sc. Computer Engineering — Isfahan University of Technology (IUT)
+  B.Sc. Computer Engineering — University of Tehran (IUT)
   Focus: software systems, algorithms, computer networks
 
 ═══════════════════════════════════════════════════════
  SKILLS INVENTORY  (proficiency 0–10)
 ═══════════════════════════════════════════════════════
 
-FRONTEND / WEB
-  React (hooks, context, custom components)  → 9
-  Vite + modern JS toolchain                 → 8
-  TailwindCSS / raw CSS / CSS animations     → 9
-  Three.js / @react-three/fiber              → 7
-  Framer Motion                              → 8
-  Responsive / accessible UI                → 8
-  TypeScript                                 → 6
+BACKEND & SYSTEMS ENGINEERING
+  Python (Django, FastAPI, Flask, Asyncio)    → 9
+  Celery & Distributed Task Queues            → 9
+  Node.js / Express / Async Architecture      → 8
+  PostgreSQL / Redis / SQLite                 → 8
+  WebSockets / Telegram OAuth & Bot API       → 9
+  RESTful APIs / GraphQL                      → 9
+  PyTest / Unit & Integration Testing          → 8
 
-BACKEND
-  Node.js / Express                          → 8
-  REST API design                            → 8
-  Websockets / real-time features            → 7
-  Python (Flask, FastAPI, scripting)         → 8
-  PostgreSQL / SQLite                        → 7
-  Firebase / Supabase                        → 7
+AGENTIC AI / LLM & RAG SYSTEMS
+  Agentic AI Workflows & Multi-Agent Systems → 9
+  RAG Architecture & Retrieval Pipelines     → 9
+  Vector Databases (Pinecone, ChromaDB, FAISS)→ 8
+  LangChain / LlamaIndex / Agent Frameworks   → 9
+  Local LLM Deployment (Ollama, vLLM, GGUF)    → 8
+  Prompt Harnessing & Loop Engineering       → 9
 
-AGENTIC AI / LLM INTEGRATION
-  LLM prompt engineering                     → 9
-  OpenAI-compatible API integration          → 9
-  Structured outputs / JSON mode             → 8
-  Agentic pipeline design                    → 8
-  RAG (retrieval-augmented generation)       → 7
+OBSERVABILITY & DEPOPS / INFRASTRUCTURE
+  Grafana / Prometheus / Sentry               → 8
+  Airflow / Temporal Orchestration Concepts   → 8
+  Docker / Containerization / Linux Admin    → 8
+  Networking (TCP/IP, Reverse Proxies, Nginx)→ 8
 
-GRAPHICS / CREATIVE TECH
-  WebGL / GLSL shaders                       → 6
-  Generative art & creative coding           → 7
-  Video editing & post-production            → 7
-  After Effects / motion graphics            → 6
+FRONTEND & MOTION GRAPHICS
+  Vue.js / Nuxt 3 / Pinia / Vue Router       → 9
+  React / Modern JS Toolchain                → 8
+  Three.js / Rive / Lottie / CSS Animation    → 9
+  TailwindCSS / Responsive UI Design          → 9
 
-NETWORKING / SYSTEMS
-  Computer networking fundamentals           → 8
-  Linux server administration                → 7
-  Docker / containerisation                  → 7
-  CI/CD basics                               → 6
-
-AUDIO / MUSIC TECH
-  Music production (DAW)                     → 7
-  Audio signal processing concepts           → 6
-
-LANGUAGES (human)
-  Persian (Farsi)    → native
-  English            → C1 (IELTS certified, taught English)
-  French             → B1 working knowledge
-  German             → A2 (active learner, YouTube series)
+SOFT SKILLS & INTERDISCIPLINARY
+  Technical English Documentation & Specs     → 9 (C1, IELTS certified)
+  Independent Problem Solving & Solo Ownership → 9
+  Creative Direction & UX Aesthetics         → 8
 
 ═══════════════════════════════════════════════════════
  WORK & PROJECT HISTORY
 ═══════════════════════════════════════════════════════
 
-1. BlipMatch! — Social / Dating Web App  (founder & sole developer)
-   Stack : React, Node/Express, Supabase, Tailwind
-   Scope : Full-stack matchmaking platform with real-time chat, user profiling,
-           recommendation engine, and mobile-first UI.
+1. BlipMatch! — Full-Stack Social & Matchmaking Platform (Founder & Sole Developer)
+   Backend  : Python, FastAPI, Django core, Celery distributed queue processing, Redis, PostgreSQL, Telegram OAuth, AI Automated Verifications, Load Testing.
+   Frontend : Vue 3, Vue Router, Pinia, Rive Runtime, Lottie interactive animations, Three.js 3D visuals, i18n localization, Telegram Mini App SDK.
 
-2. NHP Mentor — AI Tutoring Platform  (founder & sole developer)
-   Stack : React, Python/FastAPI, OpenAI API, PostgreSQL
-   Scope : Personalised LLM-driven tutoring for Iranian high-school students;
-           structured lesson generation, progress tracking, parent dashboard.
+2. dvt — Autonomous Agentic Content Engine (Architect & Lead Developer)
+   Stack    : Python, LangChain, Multi-Agent Loop Engineering, Ollama/vLLM Local Models, Automated Validation Pipelines.
+   Scope    : Autonomous multi-agent pipeline orchestrating research, drafting, verification, and multimedia publishing with zero human intervention.
 
-3. ZinoWorld — AR / Interactive Experience  (lead developer)
-   Stack : WebGL, Three.js, React
-   Scope : Immersive 3D world for an Iranian brand; custom shaders, interactive
-           storytelling, performance-optimised for mobile browsers.
+3. Zino Bot & ZinoWorld — RAG Legal Assistant & Interactive Platform (Lead AI Architect)
+   Stack    : Python, LangChain, RAG Pipelines, Pinecone & FAISS Vector DBs, Hybrid Search Tuning, Nuxt 3, Three.js.
+   Scope    : Domain-specific RAG assistant processing legal & immigration docs with strict context retrieval tuning.
 
-4. DVT (Data Visualisation Tool) — Internal analytics dashboard
-   Stack : React, D3.js, Node, SQLite
-   Scope : Real-time data pipeline visualisation for a research team.
+4. NHPMentor — Hybrid E-Commerce & AI Diagnostic Platform (Full-Stack Developer)
+   Stack    : Nuxt 3 (SSR/SPA), Vue 3, Python, Vector Search, AI Dosage Diagnostics.
+   Scope    : High-performance health mentor platform integrating LLM diagnosis, product recommendation, and admin suite.
 
-5. cafékalya — E-commerce & brand site  (freelance)
-   Stack : React, Firebase, CSS
-   Scope : Full branded online store with cart, checkout, and admin panel.
+5. cafékalya — Custom Point of Sale & Digital Menu (Full-Stack Developer)
+   Stack    : JavaScript, Node.js, Express, SQLite, Custom UI.
+   Scope    : Real-time digital menu and lightweight CRM with offline resilience and order management.
 
 6. Freelance AI integrations (various clients, 2023–present)
    Scope : LLM prompt engineering, chatbot configuration, structured-output

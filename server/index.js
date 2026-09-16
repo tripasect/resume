@@ -16,9 +16,11 @@ import fetch from 'node-fetch';
 import SYSTEM_PROMPT from './systemPrompt.js';
 
 const {
-  LLM_BASE_URL = 'https://freellmapi.dragon-tail.ir/v1',
+  // FitCheck and the relay run on the same host. Going straight to the
+  // loopback listener avoids the server's public-IP hairpin route and Nginx.
+  LLM_BASE_URL = 'http://127.0.0.1:13001/api/v1',
   LLM_API_KEY,
-  LLM_MODEL = 'deepseek-v4-flash',
+  LLM_MODEL = 'google/gemini-3.7-flash',
   PORT = 13203,
 } = process.env;
 

@@ -25,7 +25,7 @@ function RadarChart({ skills }) {
 
   const SIZE = 260;
   const CENTER = SIZE / 2;
-  const RADIUS = 82;
+  const RADIUS = 72; // Decreased slightly to give labels more room
   const N = skills.length;
   const angle = (i) => (Math.PI * 2 * i) / N - Math.PI / 2;
   const pt    = (i, r) => ({
@@ -41,7 +41,8 @@ function RadarChart({ skills }) {
 
   return (
     <div className="fc-radar-wrap">
-      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="fc-radar" aria-label="Skills radar chart">
+      {/* Expanded viewBox to -45 to 305 horizontally (350 width) and -10 to 270 vertically (280 height) for extra legend clearance, centering the chart at 130,130 */}
+      <svg viewBox="-45 -10 350 280" className="fc-radar" aria-label="Skills radar chart">
         {rings.map((pts, i) => (
           <polygon key={i} points={pts} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
         ))}
@@ -52,7 +53,7 @@ function RadarChart({ skills }) {
         <polygon points={demand}   fill="rgba(239,68,68,0.12)"  stroke="rgba(239,68,68,0.45)"  strokeWidth="1.5" strokeLinejoin="round" />
         <polygon points={coverage} fill="rgba(34,197,94,0.18)"  stroke="rgba(34,197,94,0.75)"  strokeWidth="2"   strokeLinejoin="round" />
         {skills.map((s, i) => {
-          const LABEL_R = RADIUS + 18;
+          const LABEL_R = RADIUS + 12; // Decreased label offset slightly to stay within viewBox safety bounds
           const { x, y } = pt(i, LABEL_R);
           const anchor = x < CENTER - 4 ? 'end' : x > CENTER + 4 ? 'start' : 'middle';
           return (
@@ -157,7 +158,17 @@ function PanelContent({ onClose }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projectDescription: text }),
       });
-      const data = await res.json();
+      const responseText = await res.text();
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch {
+        throw new Error(
+          res.ok
+            ? 'The server returned an invalid response. Please try again.'
+            : `The request failed (HTTP ${res.status}). Please try again.`,
+        );
+      }
       if (!res.ok) throw new Error(data?.error ?? `HTTP ${res.status}`);
       if (data.result) {
         setResult(data.result);
@@ -329,9 +340,8 @@ function PanelContent({ onClose }) {
  *   act2Ref  — ref attached to the Act II section element in App.jsx
  */
 export default function FitCheck({ act2Ref }) {
-  // Mobile: tab is always visible; auto-opens once Act II enters the viewport
+  // Mobile: bottom sheet toggled open/closed with a persistent tab handle
   const [mobileOpen, setMobileOpen] = useState(false);
-  const autoOpenedRef = useRef(false);
 
   // Desktop panel resize
   const [panelWidth, setPanelWidth] = useState(320);
@@ -361,22 +371,6 @@ export default function FitCheck({ act2Ref }) {
       document.removeEventListener('mouseup', onUp);
     };
   }, []);
-
-  // Observe Act II — auto-open the mobile sheet the first time it scrolls in
-  useEffect(() => {
-    if (!act2Ref?.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !autoOpenedRef.current) {
-          autoOpenedRef.current = true;
-          setMobileOpen(true);
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(act2Ref.current);
-    return () => observer.disconnect();
-  }, [act2Ref]);
 
   const closePanel = useCallback(() => setMobileOpen(false), []);
 

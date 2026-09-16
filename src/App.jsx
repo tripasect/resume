@@ -6,6 +6,7 @@ import Triangles from './Triangles';
 import Chapter from './Chapter';
 import { ProjectList } from './ProjectItem';
 import FitCheck from './FitCheck';
+import TechIndex from './TechIndex';
 import blipMatchLogo from './assets/project-logotypes/BlipMatch!.svg';
 import nhpMentorLogo from './assets/project-logotypes/NHPMentor.svg';
 import ZinoWorldLogo from './assets/project-logotypes/ZinoWorld.svg';
@@ -14,67 +15,61 @@ import cafekalyaLogo from './assets/project-logotypes/cafekalya.svg';
 
 
 // ─── Chapter accent colors ─────────────────────────────────────────────────────
-// 0=hero, 1=Apps, 2=AI, 3=Graphics, 4=Networks, 5=Sound, 6=Languages, 7=coda
+// 0=hero, 1=Full-Stack Eng, 2=Agentic AI, 3=Systems & Ops, 4=Soft Skills, 5=Tech Index, 6=coda
 const ACCENTS = [
   '#F5F0E8',   // hero
-  '#ff2760',   // I  — Web-Apps
-  '#2DD4BF',   // II — Agentic AI
-  '#F59E0B',   // III — Motion & Craft
-  '#EF4444',   // IV — The Network
-  '#48ec56',   // V  — Sound
-  '#A78BFA',   // VI — Languages
+  '#ff2760',   // I  — Full-Stack Engineering & Web-Apps
+  '#2DD4BF',   // II — Agentic AI & RAG Engineering
+  '#F59E0B',   // III — Systems, Networking & Observability
+  '#A78BFA',   // IV — Soft Skills & Interdisciplinary Mastery
+  '#48ec56',   // V  — Machine-Readable Technology Index
   '#F5F0E8',   // coda
 ];
 
-// ─── Act I — Complex Web / Mobile Applications ────────────────────────────────
-const appProjects = [
+// ─── Act I — Full-Stack & Web-Apps ─────────────────────────────────────────────
+const fullStackProjects = [
   {
     name: 'BlipMatch!',
     logotype: blipMatchLogo,
-    tech: 'Vue · Vue Router · Pinia ·  Telegram SDK · Lottie',
+    tech: 'Python · Django · Celery · Asyncio · Redis · PostgreSQL · Telegram OAuth · Vue 3 · Pinia · Vue Router · Rive · Lottie · Three.js · i18n',
     description:
-      'An anti-swipe, ambient social-discovery app built inside Telegram. Features 200+ custom components, interactive icebreakers, FM co-listening, and digital gift conversions — built around a dark, late-night aesthetic.',
-     href: 'https://t.me/blipmatchbot',
-     screenshots: ['https://via.placeholder.com/400x200?text=BlipMatch+Screenshot+1', 'https://via.placeholder.com/400x200?text=BlipMatch+Screenshot+2'],
-   },
-   {
-     name: 'Cafekalya',
-     logotype: cafekalyaLogo,
-     tech: 'Vanila JS · Node.js',
-     description:
-       'Digital menu with funny-looking aesthetic integrated with a built-in compact CRM/cashier system.',
-     href: 'https://cafekalya.ir',
-     screenshots: ['https://via.placeholder.com/400x200?text=Cafekalya+Screenshot+1', 'https://via.placeholder.com/400x200?text=Cafekalya+Screenshot+2'],
-   }
-];
-
-// ─── Act II — Agentic AI Systems ──────────────────────────────────────────────
-const aiProjects = [
-  {
-    name: 'dvt',
-    logotype: DvtLogo,
-    tech: 'Python · LangChain · Multi-Agent',
-    description:
-      'An agentic AI system made up of modular, autonomous components that collaborate toward the shared goal of generating SEO-optimized ready-to-publish multi-media articles. Each module covers a specialized domain — planning, retrieval, execution, validation — passing control without requiring human input between steps.',
-    screenshots: ['https://via.placeholder.com/400x200?text=DVT+Screenshot+1', 'https://via.placeholder.com/400x200?text=DVT+Screenshot+2'],
-  },
-  {
-    name: 'Zino Bot',
-    logotype: ZinoWorldLogo,
-    tech: 'Python · LangChain · RAG · Pinecone',
-    href: 'https://bot.zinoa.ai',
-    description:
-      'A RAG-powered chatbot for navigating immigration law. Supports multilingual queries across Pinecone/FAISS vector stores, with LangChain pipelines and a curated legal knowledge base.',
-    screenshots: ['https://via.placeholder.com/400x200?text=ZinoBot+Screenshot+1', 'https://via.placeholder.com/400x200?text=ZinoBot+Screenshot+2'],
+      'State-of-the-art social discovery platform & Telegram Mini App. Engineered high-throughput distributed task queues with Celery & Redis for asynchronous background AI verification, automated load-testing, Telegram OAuth authentication, and rate-limiting. Frontend features 200+ reactive components utilizing Vue 3, Pinia, Vue Router, interactive Rive & Lottie keyframe animations, Three.js canvas shaders, and multi-language i18n localization.',
+    href: 'https://t.me/blipmatchbot',
   },
   {
     name: 'NHPMentor',
     logotype: nhpMentorLogo,
-    tech: 'Nuxt 3 · Vue · Python · AI',
+    tech: 'Nuxt 3 · Vue 3 · Python · Vector Search · PostgreSQL · REST APIs',
     description:
-      'A hybrid Nuxt 3 platform for a natural health brand — combining SSR for discoverability with SPA interactivity. Includes AI-assisted Q&A, product search, dosage evaluation, and an admin panel.',
+      'Hybrid Nuxt 3 e-commerce & AI health diagnosis platform. Combines SSR for search engine discoverability with interactive SPA user flows. Integrates real-time vector search, custom dosage recommendation engines, secure payment gateway integrations, and complete backend telemetry.',
     href: 'https://nhpmentor.com/',
-    screenshots: ['https://via.placeholder.com/400x200?text=NHPMentor+Screenshot+1', 'https://via.placeholder.com/400x200?text=NHPMentor+Screenshot+2'],
+  },
+  {
+    name: 'Cafekalya',
+    logotype: cafekalyaLogo,
+    tech: 'JavaScript · Node.js · Express · SQLite · Custom UI',
+    description:
+      'Lightweight POS, digital menu, and CRM system engineered for real-time order processing, table management, and cashier workflow automation with zero-dependency offline resilience.',
+    href: 'https://cafekalya.ir',
+  }
+];
+
+// ─── Act II — Agentic AI & RAG Systems ─────────────────────────────────────────
+const aiProjects = [
+  {
+    name: 'dvt',
+    logotype: DvtLogo,
+    tech: 'Python · LangChain · Multi-Agent Orchestration · Ollama / vLLM · Loop Engineering · Prompt Harnessing',
+    description:
+      'Autonomous agentic AI content production suite leveraging modular, cooperating agents (Planner, Retriever, Drafting Agent, Quality Inspector, Executor) built with Python and LangChain. Integrates local LLM instances (vLLM/Ollama) with prompt harnessing and iterative evaluation loops to execute multi-step research and content generation completely hands-free.',
+  },
+  {
+    name: 'Zino Bot & ZinoWorld',
+    logotype: ZinoWorldLogo,
+    tech: 'Python · LangChain · RAG · Vector DB (Pinecone & FAISS) · OpenAI API · Nuxt 3 · Three.js',
+    href: 'https://bot.zinoa.ai',
+    description:
+      'Production RAG system and interactive brand portal. Features vector database indexing across legal knowledge bases with Pinecone and FAISS, fine-tuned hybrid retrieval algorithms, strict prompt guardrails, and a WebGL-enhanced frontend build.',
   },
 ];
 
@@ -158,50 +153,50 @@ function App() {
           data-chapter-index="0"
           style={{ opacity: heroOpacity, y: heroY }}
         >
-          <p className="hero-eyebrow">Portfolio — 2026</p>
+          <p className="hero-eyebrow">Portfolio & Technology Spotlight — 2026</p>
           <h1 className="hero-name">
             <span>Alireza</span>
             <span>Sadjadipour</span>
           </h1>
           <p className="hero-title">
-            A builder across disciplines — software, AI, design, and sound. Here is a selection of what I've worked on.
+            Senior Full-Stack & Systems Engineer with a heavy focus on backend architecture, asynchronous task processing, distributed queue orchestration, observability, and agentic AI systems.
           </p>
           <div className="hero-meta">
             <a href="mailto:hello@alirezasadjadipour.ir">hello@alirezasadjadipour.ir</a>
             <span>+98 938 724 7153</span>
-            <span>B.Sc. Mathematics — University of Tehran</span>
+            <span>B.Sc. Mathemathics and Applications — University of Tehran</span>
           </div>
         </motion.section>
 
-        {/* ── Act I: Web-Apps ─────────────────────────── */}
+        {/* ── Act I: Full-Stack Engineering ─────────────────────────── */}
         <div data-chapter-index="1">
-          <Chapter number="I" title="Web-Apps" accentColor={ACCENTS[1]} id="act-apps">
+          <Chapter number="I" title="Full-Stack Engineering" accentColor={ACCENTS[1]} id="act-apps">
             <p className="chapter-lead">
-              Web and mobile applications with a focus on detail — component-rich interfaces, Lottie animations, and interactive icons that try to feel considered rather than generic.
+              High-throughput backend systems engineered alongside rich, reactive frontend interfaces. Deep experience in Python/Django/FastAPI ecosystems, distributed task processing with Celery and Redis, load-testing, and real-time async communication coupled with state-of-the-art UI architectures.
             </p>
-            <ProjectList projects={appProjects} accentColor={ACCENTS[1]} />
+            <ProjectList projects={fullStackProjects} accentColor={ACCENTS[1]} />
           </Chapter>
         </div>
 
-        {/* ── Act II: Agentic AI ────────────────────────────── */}
+        {/* ── Act II: Agentic AI & RAG Engineering ─────────────────── */}
         <div data-chapter-index="2" ref={act2Ref}>
-          <Chapter number="II" title="Agentic AI" accentColor={ACCENTS[2]} id="act-ai">
+          <Chapter number="II" title="Agentic AI & RAG" accentColor={ACCENTS[2]} id="act-ai">
             <p className="chapter-lead">
-              AI systems built around modular, cooperating agents — planners, retrievers, validators, and executors working toward a shared goal with minimal human intervention.
+              Autonomous multi-agent architectures, RAG pipelines, vector retrieval optimization, local model deployment, and AI workflow harnessing. Excited to join innovative, state-of-the-art generative AI initiatives.
             </p>
             <ProjectList projects={aiProjects} accentColor={ACCENTS[2]} />
           </Chapter>
         </div>
 
-        {/* ── Act III: Motion & Craft ───────────────────────── */}
+        {/* ── Act III: Systems, Networking & Infrastructure ──────────── */}
         <div data-chapter-index="3">
-          <Chapter number="III" title="Motion & Craft" accentColor={ACCENTS[3]} id="act-graphics">
+          <Chapter number="III" title="Systems & Infrastructure" accentColor={ACCENTS[3]} id="act-networks">
             <p className="chapter-lead">
-              Graphical assets, animated icons, After Effects sequences, and photography — a quieter side of the work, available to view on request.
+              Production infrastructure management, containerized deployments, reverse proxy setups, and application monitoring. Experienced with observability stack integration (Grafana, Sentry, Prometheus), distributed task workflows (Celery, Airflow/Temporal paradigms), and robust CI/CD routines.
             </p>
             <ContactGate
-              text="Work not publicly listed — reach out to see the gallery."
-              href="mailto:hello@alirezasadjadipour.ir?subject=Gallery Request"
+              text="Detailed infrastructure configurations and internal telemetry setups available upon request."
+              href="mailto:hello@alirezasadjadipour.ir?subject=Infrastructure & Systems Engineering"
               label="Contact me"
               accent={ACCENTS[3]}
               isExternal={false}
@@ -209,49 +204,27 @@ function App() {
           </Chapter>
         </div>
 
-        {/* ── Act IV: The Network ───────────────────────────── */}
+        {/* ── Act IV: Soft Skills & Interdisciplinary Mastery ────────── */}
         <div data-chapter-index="4">
-          <Chapter number="IV" title="The Network" accentColor={ACCENTS[4]} id="act-networks">
+          <Chapter number="IV" title="Soft Skills & Interdisciplinary" accentColor={ACCENTS[4]} id="act-softskills">
             <p className="chapter-lead">
-              Infrastructure work — routing, load balancing, containers, and inter-service connectivity. Mostly practical solutions to real constraints.
+              Autonomous problem solver with strong solo ownership (90%+ solo execution capacity), clear technical documentation habits, and disciplined daily routines. High proficiency in reading and writing technical English specifications (C1 IELTS certified). Taught English professionally; active learner of French (B1) and German (A2). Creative design, motion graphics (After Effects), and DAW audio production serve as complementary interdisciplinary skills to technical execution.
             </p>
-            <ContactGate
-              text="Deeper infrastructure and networking work is not publicly available. Contact me to discuss further."
-              href="mailto:hello@alirezasadjadipour.ir?subject=Networking Work"
-              label="Contact me"
-              accent={ACCENTS[4]}
-              isExternal={false}
-            />
           </Chapter>
         </div>
 
-        {/* ── Act V: Sound ──────────────────────────────────── */}
+        {/* ── Act V: Machine-Readable Comprehensive Technology Index ──── */}
         <div data-chapter-index="5">
-          <Chapter number="V" title="Sound" accentColor={ACCENTS[5]} id="act-Sound">
+          <Chapter number="V" title="Technology Keyword Index" accentColor={ACCENTS[5]} id="act-tech-index">
             <p className="chapter-lead">
-              Audio recording, DAW production, vocal work, podcasts, and mixtapes. Probably not on the job description, but it shapes how I think about rhythm and attention.
+              A comprehensive, machine-readable keyword index of frameworks, libraries, tools, protocols, and architectural paradigms I comfortably operate with — provisioned for recruiters and AI indexing systems.
             </p>
-            <ContactGate
-              text="Listen on SoundCloud."
-              href="https://soundcloud.com/tripasect"
-              label="soundcloud.com/tripasect"
-              accent={ACCENTS[5]}
-              isExternal
-            />
-          </Chapter>
-        </div>
-
-        {/* ── Act VI: Languages ─────────────────────────────── */}
-        <div data-chapter-index="6">
-          <Chapter number="VI" title="Languages" accentColor={ACCENTS[6]} id="act-languages">
-            <p className="chapter-lead">
-              I've taught English, hold an IELTS certificate, have a working knowledge of French, and run a small YouTube series on learning German. Language learning has been a consistent thread.
-            </p>
+            <TechIndex accent={ACCENTS[5]} />
           </Chapter>
         </div>
 
         {/* ── Coda ──────────────────────────────────────────── */}
-        <div data-chapter-index="7">
+        <div data-chapter-index="6">
           <motion.section
             className="coda"
             initial={{ opacity: 0 }}

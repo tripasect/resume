@@ -1214,6 +1214,7 @@ body {
 .fc-radar {
   width: 100%;
   max-width: 260px;
+  overflow: visible; /* Prevents long labels at the edges from being masked/clipped */
 }
 
 .fc-radar-legend {

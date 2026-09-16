@@ -4,14 +4,13 @@ import * as THREE from 'three';
 
 // Chapter accent colors as THREE.Color values
 const ACCENT_HEX = [
-  '#F5F0E8',   // hero / coda
-  '#ff2760',   // I  — Web-Apps
-  '#2DD4BF',   // II — Agentic AI
-  '#F59E0B',   // III — Motion & Craft
-  '#EF4444',   // IV — The Network
-  '#48ec56',   // V  — Sound
-  '#A78BFA',   // VI — Languages
-  '#4D3E33',   // coda
+  '#F5F0E8',   // 0: Overture
+  '#ff2760',   // I: Full-Stack Engineering & Web-Apps
+  '#2DD4BF',   // II: Agentic AI & RAG Engineering
+  '#F59E0B',   // III: Systems, Networking & Infrastructure
+  '#A78BFA',   // IV: Soft Skills & Interdisciplinary Mastery
+  '#48ec56',   // V: Machine-Readable Comprehensive Technology Index
+  '#F5F0E8',   // 6: Coda
 ];
 
 const Triangles = ({ scrollY, accentIndex = 0 }) => {

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بررسی دامنهٔ اجرا — دریاتامین</title>
+    <style>
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Woff2/Alibaba-Light.woff2") format("woff2");
+            font-weight: 300;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Woff2/Alibaba-Regular.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Woff2/Alibaba-Bold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Woff2/Alibaba-Black.woff2") format("woff2");
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        :root {
+            --navy: #000000;
+            --navy-soft: #f1f2f4;
+            --ink: #17202a;
+            --muted: #5e6875;
+            --line: #cfd6df;
+            --paper: #ffffff;
+            --soft: #f7f8fa;
+
+            --green: #256447;
+            --green-bg: #eef5f0;
+            --green-border: #a8d5b8;
+
+            --amber: #7a4a00;
+            --amber-bg: #fdf6e6;
+            --amber-border: #e0b86a;
+
+            --future: #4a5260;
+            --future-bg: #f2f3f5;
+            --future-border: #c2c8d0;
+
+            --hero-bg: #080808;
+            --hero-fg: #F5F0E8;
+            --hero-fg-muted: rgba(245, 240, 232, 0.75);
+            --hero-fg-subtle: rgba(245, 240, 232, 0.28);
+            --hero-accent: #ff2760;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Alibaba", Tahoma, Arial, sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.75;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 0 3rem;
+            background: var(--paper);
+        }
+
+        /* ── Hero ────────────────────────────────────────────────── */
+        .header {
+            background: var(--hero-bg);
+            color: var(--hero-fg);
+            padding: 3.5rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        .header-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        h1 {
+            font-family: "Alibaba", sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            line-height: 1.25;
+            color: var(--hero-fg);
+            margin: 0 0 1.4rem;
+        }
+
+        h1 .accent { color: var(--hero-accent); }
+
+        .subtitle {
+            font-family: "Alibaba", sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--hero-fg-muted);
+            max-width: 520px;
+            margin-left: auto;
+            line-height: 1.65;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 1.8rem;
+            margin-top: 1.4rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--hero-fg-subtle);
+        }
+
+        /* ── Body ────────────────────────────────────────────────── */
+        .doc-body {
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        .abstract {
+            margin: clamp(1.5rem, 4vw, 2.5rem) 0;
+            padding: 1rem 1.1rem;
+            border-right: 4px solid var(--navy);
+            background: var(--navy-soft);
+            text-align: justify;
+            font-size: 10.5pt;
+        }
+
+        .section { margin: clamp(1.75rem, 4vw, 2.75rem) 0; }
+
+        h2 {
+            margin-bottom: 12px;
+            color: var(--navy);
+            font-size: 14.5pt;
+            font-weight: 700;
+        }
+
+        h2 .section-badge {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 2px 10px;
+            font-size: 7.5pt;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            vertical-align: middle;
+            border-radius: 2px;
+            position: relative;
+            top: -2px;
+        }
+
+        h2 .badge-in    { background: var(--green-bg);   color: var(--green);  border: 1px solid var(--green-border); }
+        h2 .badge-note  { background: var(--amber-bg);   color: var(--amber);  border: 1px solid var(--amber-border); }
+        h2 .badge-later { background: var(--future-bg);  color: var(--future); border: 1px solid var(--future-border); }
+
+        p { margin-bottom: 8px; text-align: justify; }
+        p.no-justify { text-align: right; }
+        strong { font-weight: 750; }
+        .muted { color: var(--muted); }
+
+        /* ── Legend ──────────────────────────────────────────────── */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 0 20px;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 8.5pt;
+            color: var(--muted);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-in     { background: var(--green);  }
+        .dot-note   { background: var(--amber);  }
+        .dot-later  { background: var(--future); }
+
+        /* ── Category blocks ─────────────────────────────────────── */
+        .cat-block {
+            margin-bottom: 10px;
+            border: 1px solid var(--line);
+            background: var(--paper);
+        }
+
+        .cat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 10px 16px;
+            background: var(--soft);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .cat-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .cat-count {
+            font-size: 8pt;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .cat-items {
+            padding: 4px 0;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 7px 16px;
+            border-bottom: 1px solid var(--line);
+            font-size: 9.5pt;
+            line-height: 1.6;
+        }
+
+        .check-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .item-text {
+            flex: 1;
+        }
+
+        .item-tag {
+            flex-shrink: 0;
+            font-size: 7.5pt;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 2px;
+            align-self: flex-start;
+            margin-top: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        .tag-in {
+            background: var(--green-bg);
+            color: var(--green);
+            border: 1px solid var(--green-border);
+        }
+
+        .tag-note {
+            background: var(--amber-bg);
+            color: var(--amber);
+            border: 1px solid var(--amber-border);
+        }
+
+        .tag-later {
+            background: var(--future-bg);
+            color: var(--future);
+            border: 1px solid var(--future-border);
+        }
+
+        /* ── Nuanced explanations ────────────────────────────────── */
+        .note-block {
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: var(--amber-bg);
+            border: 1px solid var(--amber-border);
+            border-right: 4px solid var(--amber);
+        }
+
+        .note-block + .note-block {
+            margin-top: 10px;
+        }
+
+        .note-block .note-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--amber);
+            margin-bottom: 5px;
+        }
+
+        .note-block p {
+            font-size: 9.5pt;
+            color: var(--ink);
+            margin-bottom: 0;
+            text-align: justify;
+        }
+
+        /* ── Future block ────────────────────────────────────────── */
+        .future-block {
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: var(--future-bg);
+            border: 1px solid var(--future-border);
+            border-right: 4px solid var(--future);
+        }
+
+        .future-block + .future-block {
+            margin-top: 10px;
+        }
+
+        .future-block .future-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--future);
+            margin-bottom: 5px;
+        }
+
+        .future-block p {
+            font-size: 9.5pt;
+            color: var(--muted);
+            margin-bottom: 0;
+            text-align: justify;
+        }
+
+        /* ── Callout ─────────────────────────────────────────────── */
+        .callout {
+            margin: 18px 0 0;
+            padding: 13px 16px;
+            border: 1.5px solid var(--navy);
+            text-align: center;
+            font-size: 9.5pt;
+        }
+
+        .callout strong { color: var(--navy); }
+
+        /* ── Summary strip ───────────────────────────────────────── */
+        .summary-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            margin: 18px 0 0;
+        }
+
+        .strip-cell {
+            padding: 16px;
+            text-align: center;
+            background: var(--paper);
+        }
+
+        .strip-cell .val {
+            font-size: 22pt;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .strip-cell .lbl {
+            font-size: 8.5pt;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .val-in    { color: var(--green);  }
+        .val-note  { color: var(--amber);  }
+        .val-later { color: var(--future); }
+
+        /* ── Footer ──────────────────────────────────────────────── */
+        .footer {
+            margin-top: 32px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 8.5pt;
+            text-align: center;
+        }
+
+        /* ── Media ───────────────────────────────────────────────── */
+        @media (max-width: 700px) {
+            .summary-strip { grid-template-columns: 1fr; }
+            .cat-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .check-item { flex-wrap: wrap; }
+            .item-tag { align-self: auto; }
+        }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            body { font-size: 9.5pt; }
+            .container { padding: 0; box-shadow: none; }
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 2rem 0 1.8rem;
+            }
+            .header-inner, .doc-body { padding: 0 16mm; }
+            .cat-block, .note-block, .future-block,
+            .callout, .summary-strip { break-inside: avoid; }
+            h2 { break-after: avoid; }
+            .cat-items { break-inside: auto; }
+        }
+    </style>
+</head>
+<body>
+<main class="container">
+
+    <header class="header">
+        <svg class="header-art" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <polygon transform="translate(-50 90) rotate(18) scale(1.35)"  points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(70 260) rotate(-70) scale(0.55)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+            <polygon transform="translate(180 60) rotate(130) scale(0.8)"  points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+            <polygon transform="translate(120 460) rotate(25) scale(1.1)"  points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(280 330) rotate(-130) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+            <polygon transform="translate(480 430) rotate(-25) scale(0.7)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(650 230) rotate(-95) scale(0.5)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+            <polygon transform="translate(760 60) rotate(35) scale(0.85)"  points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+            <polygon transform="translate(840 350) rotate(145) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+            <polygon transform="translate(940 120) rotate(-55) scale(1.2)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(1000 480) rotate(95) scale(1.0)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+        </svg>
+        <div class="header-inner">
+            <h1>بررسی دستور کار دریاتامین</h1>
+            <p class="subtitle">تحلیل آنچه در دامنهٔ کار جاری قرار می‌گیرد، آنچه مستلزم قید توضیح است و آنچه می‌تواند در فاز بعدی مطرح شود</p>
+            <div class="meta">
+                <span>کارگزار: علیرضا سجادی پور</span>
+                <span>مخاطب: شرکت دریاتامین</span>
+                <span>شهریور ۱۴۰۵</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="doc-body">
+
+        <section class="abstract">
+            سند پیشنهادی شما فهرست منظم و پوشش‌دهنده‌ای از نیازهای سئویی دریاتامین را ترسیم می‌کند. من آن را بررسی کرده‌ام. اکثر قریب به اتفاق این موارد از ابتدا بخشی از برنامه‌ام بوده‌اند و هیچ‌کدام برایم تازه نیست. تنها چند آیتم — نه بیشتر — اندکی خارج از چارچوب سئوی تکنیکال هستند و به‌عنوان کار مستقل در فاز بعدی در نظر گرفته می‌شوند. این سند هر آیتم را با صراحت دسته‌بندی می‌کند.
+        </section>
+
+        <!-- ── Summary strip ── -->
+        <div class="summary-strip">
+            <div class="strip-cell">
+                <div class="val val-in">۲۷</div>
+                <div class="lbl">آیتم کاملاً در دامنهٔ کار جاری</div>
+            </div>
+            <div class="strip-cell">
+                <div class="val val-note">۲</div>
+                <div class="lbl">آیتم با قید توضیح</div>
+            </div>
+            <div class="strip-cell">
+                <div class="val val-later">۳</div>
+                <div class="lbl">آیتم برای فاز بعدی</div>
+            </div>
+        </div>
+
+        <!-- ── Section 1: In Scope ── -->
+        <section class="section">
+            <h2>
+                <span class="section-badge badge-in">در اجرا</span>
+                آنچه کاملاً در دامنهٔ پروژهٔ جاری قرار دارد
+            </h2>
+            <p>تمام آیتم‌های زیر بخش اصلی برنامه‌ٔ اجرایی را تشکیل می‌دهند و از روز اول در دستور کار من بوده‌اند.</p>
+
+            <div class="legend">
+                <div class="legend-item"><div class="legend-dot dot-in"></div> در اجرا</div>
+                <div class="legend-item"><div class="legend-dot dot-note"></div> با قید توضیح</div>
+                <div class="legend-item"><div class="legend-dot dot-later"></div> فاز بعدی</div>
+            </div>
+
+            <!-- Category 1 -->
+            <div class="cat-block">
+                <div class="cat-header">
+                    <span class="cat-title">۱. سئوی تکنیکال</span>
+                    <span class="cat-count">۱۱ آیتم — همه در اجرا</span>
+                </div>
+                <div class="cat-items">
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی و تکمیل سئوی تکنیکال سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی وضعیت Crawl و Index صفحات و رفع خطاهای فنی</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">اصلاح و بهینه‌سازی Sitemap</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">اصلاح و بهینه‌سازی Robots.txt</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی و اصلاح Canonicalها</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بهینه‌سازی ساختار URLها</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بهینه‌سازی سرعت سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بهینه‌سازی Core Web Vitals</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بهینه‌سازی نسخهٔ موبایل</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">اصلاح ساختار لینک‌های داخلی</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بهینه‌سازی معماری سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="cat-block">
+                <div class="cat-header">
+                    <span class="cat-title">۲. Structured Data / Schema</span>
+                    <span class="cat-count">۶ آیتم — همه در اجرا</span>
+                </div>
+                <div class="cat-items">
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">پیاده‌سازی Structured Data مناسب</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">پیاده‌سازی Organization Schema</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">پیاده‌سازی Product Schema برای محصولات اصلی</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">پیاده‌سازی FAQ Schema در صفحات مناسب</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">پیاده‌سازی Breadcrumb Schema</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی و پیاده‌سازی سایر Schemaهای مرتبط، در صورت نیاز</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="cat-block">
+                <div class="cat-header">
+                    <span class="cat-title">۳. تعریف و تقویت Entity شرکت — داخل سایت</span>
+                    <span class="cat-count">۴ آیتم — همه در اجرا</span>
+                </div>
+                <div class="cat-items">
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">تعریف شفاف Entity شرکت «DaryaTamin / دریاتامین» در محتوا و ساختار داده‌های سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">ایجاد ارتباط مشخص میان برند، محصولات، تخصص‌ها و پروژه‌های شرکت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">تقویت صفحات About، Projects، Products و Technical Expertise</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">معرفی روشن سوابق، توانمندی‌ها، پروژه‌های شاخص و مزیت‌های قابل اثبات شرکت روی سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="cat-block">
+                <div class="cat-header">
+                    <span class="cat-title">۴. بهینه‌سازی برای AI Search / GEO / AEO</span>
+                    <span class="cat-count">۴ آیتم در اجرا — ۲ آیتم با قید توضیح</span>
+                </div>
+                <div class="cat-items">
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی امکان و نحوهٔ دسترسی Crawlerهای اصلی هوش مصنوعی به سایت</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی و تنظیم llms.txt همراه با توضیح دقیق کاربرد آن</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">ساخت محتوای واضح، ساختاریافته و قابل استخراج و استناد توسط AI</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">ایجاد FAQ بر اساس سؤالات واقعی خریداران صنعتی و دریایی</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-note"></div>
+                        <div class="item-text">ایجاد صفحات تخصصی برای حوزه‌های اصلی فعالیت شرکت</div>
+                        <span class="item-tag tag-note">با قید توضیح</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-note"></div>
+                        <div class="item-text">تهیهٔ نسخهٔ انگلیسی حرفه‌ای برای صفحات کلیدی؛ نه صرفاً ترجمهٔ فارسی</div>
+                        <span class="item-tag tag-note">با قید توضیح</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 5 — partial -->
+            <div class="cat-block">
+                <div class="cat-header">
+                    <span class="cat-title">۵. تقویت اعتبار خارج از سایت — بخش اول: بررسی و آنالیز</span>
+                    <span class="cat-count">۱ آیتم در اجرا — ۳ آیتم برای فاز بعدی</span>
+                </div>
+                <div class="cat-items">
+                    <div class="check-item">
+                        <div class="item-dot dot-in"></div>
+                        <div class="item-text">بررسی وضعیت فعلی نام DaryaTamin در وب — آنالیز و گزارش</div>
+                        <span class="item-tag tag-in">در اجرا</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-later"></div>
+                        <div class="item-text">یکسان‌سازی نام، اطلاعات و معرفی شرکت در منابع مختلف خارجی</div>
+                        <span class="item-tag tag-later">فاز بعدی</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-later"></div>
+                        <div class="item-text">تدوین و اجرای برنامه برای دریافت Mention، Citation و Backlink از منابع معتبر</div>
+                        <span class="item-tag tag-later">فاز بعدی</span>
+                    </div>
+                    <div class="check-item">
+                        <div class="item-dot dot-later"></div>
+                        <div class="item-text">تقویت E-E-A-T از طریق منابع و فعالیت‌های خارج از سایت</div>
+                        <span class="item-tag tag-later">فاز بعدی</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ── Section 2: Nuanced ── -->
+        <section class="section">
+            <h2>
+                <span class="section-badge badge-note">توضیح</span>
+                آیتم‌هایی که نیاز به قید دارند
+            </h2>
+            <p>این دو آیتم از نظر مفهومی درست هستند — اما دامنهٔ دقیق اجرای آن‌ها بستگی به تعریف دارد.</p>
+
+            <div class="note-block">
+                <div class="note-title">صفحات تخصصی جدید</div>
+                <p>
+                    <strong>بهینه‌سازی و تقویت صفحات موجود</strong> بخشی ثابت از برنامه است. اگر بررسی اولیه نشان دهد که یک صفحهٔ کلیدی برای یک حوزهٔ فعالیت شرکت اصلاً وجود ندارد، ایجاد آن صفحه در چارچوب توافق پروژه مطرح خواهد شد. اما ساخت تعداد زیادی صفحهٔ کاملاً جدید از صفر — بدون اینکه پایهٔ محتوایی موجود باشد — در تعریف سئوی تکنیکال نمی‌گنجد و در صورت نیاز به‌عنوان یک سرویس مکمل جداگانه ارزیابی می‌شود.
+                </p>
+            </div>
+
+            <div class="note-block">
+                <div class="note-title">نسخهٔ انگلیسی حرفه‌ای</div>
+                <p>
+                    <strong>بررسی، اصلاح و بهینه‌سازی محتوای انگلیسی موجود سایت</strong> کاملاً در دامنهٔ پروژه است — این بخش از ابتدا هم بخشی از برنامه بوده. آنچه با قید مطرح می‌شود تولید محتوای انگلیسی کاملاً جدید برای صفحاتی است که اصلاً نسخهٔ انگلیسی ندارند؛ این کار در حوزهٔ تولید محتوا و کپی‌رایتینگ قرار می‌گیرد و اگر در حین پروژه ضروری تشخیص داده شود، جداگانه بررسی خواهد شد.
+                </p>
+            </div>
+        </section>
+
+        <!-- ── Section 3: Future ── -->
+        <section class="section">
+            <h2>
+                <span class="section-badge badge-later">فاز بعدی</span>
+                آنچه خارج از دامنهٔ فعلی است
+            </h2>
+            <p>سه آیتم باقی‌مانده مربوط به فعالیت‌های <strong>خارج از سایت</strong> هستند — حوزه‌ای که به‌درستی به آن «آف‌پیج سئو» یا «دیجیتال PR» می‌گویند و ماهیت آن با سئوی تکنیکال تفاوت ساختاری دارد.</p>
+
+            <div class="future-block">
+                <div class="future-title">یکسان‌سازی اطلاعات در منابع خارجی</div>
+                <p>NAP consistency در دایرکتوری‌ها، پروفایل‌های خارجی و پلتفرم‌های بیزنسی مستلزم شناسایی، دسترسی و ویرایش در منابع مختلف خارج از سایت است. این کار ارزش دارد — اما با بررسی اولیه از داخل سایت شروع نمی‌شود.</p>
+            </div>
+
+            <div class="future-block">
+                <div class="future-title">برنامهٔ لینک‌سازی، Citation و Mention</div>
+                <p>دریافت بک‌لینک و mention از منابع معتبر یک برنامهٔ فعال و مستقل است که شامل تولید محتوای قابل‌ارجاع، outreach، روابط عمومی دیجیتال و پایش مستمر می‌شود. این خدمت پس از اتمام فاز تکنیکال — که پایهٔ لازم را می‌سازد — قابل طراحی و اجراست.</p>
+            </div>
+
+            <div class="future-block">
+                <div class="future-title">تقویت E-E-A-T از طریق منابع خارجی</div>
+                <p>تقویت E-E-A-T از مسیر داخل سایت — معرفی تیم، سوابق پروژه‌ها، مدارک تخصصی و محتوای اثباتی — در اجرا است. اما تقویت آن از مسیر خارج سایت (مقالات مهمان، مصاحبه، پوشش رسانه‌ای و...) به یک برنامهٔ جداگانه نیاز دارد.</p>
+            </div>
+
+            <div class="callout" style="margin-top: 18px;">
+                <strong>نکتهٔ مهم:</strong> این سه آیتم نادیده گرفته نمی‌شوند — فقط در صف درستی قرار می‌گیرند. اثر بلندمدت آف‌پیج سئو در گرو داشتن یک پایهٔ تکنیکال محکم است؛ پایه‌ای که این پروژه می‌سازد. پس از اتمام فاز اول، برنامه‌ریزی برای این موارد با اطلاعات کافی و واقع‌بینانه‌تری انجام خواهد شد.
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>این سند پاسخ رسمی به دستور کار پیشنهادی دریاتامین است. &nbsp;|&nbsp; شهریور ۱۴۰۵</p>
+        </footer>
+
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[Unit]
+Description=OpenRouter SOCKS5 relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dragon-tail
+WorkingDirectory=/home/dragon-tail/aliresadjadipour
+Environment=NODE_ENV=production
+Environment=PORT=13001
+Environment=SOCKS_PROXY_URL=socks5://127.0.0.1:8888
+ExecStart=/usr/bin/node server/openrouter-relay.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

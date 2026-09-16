@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروپوزال بهینه‌سازی سئو دریا تأمین</title>
+    <style>
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Alibaba/Alibaba-Light.woff2") format("woff2");
+            font-weight: 300;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Alibaba/Alibaba-Regular.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Alibaba/Alibaba-Bold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("Alibaba/Alibaba-Black.woff2") format("woff2");
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        :root {
+            --navy: #000000;
+            --navy-soft: #f1f2f4;
+            --ink: #17202a;
+            --muted: #5e6875;
+            --line: #cfd6df;
+            --paper: #ffffff;
+            --soft: #f7f8fa;
+            --green: #256447;
+
+            /* Hero palette (matches AlirezaSadjadipour.ir) */
+            --hero-bg: #080808;
+            --hero-fg: #F5F0E8;
+            --hero-fg-muted: rgba(245, 240, 232, 0.75);
+            --hero-fg-subtle: rgba(245, 240, 232, 0.28);
+            --hero-accent: #ff2760;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Alibaba", Tahoma, Arial, sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.75;
+        }
+
+        .container {
+            width: 100%;
+            max-width: none;
+            min-height: 0;
+            margin: 0;
+            padding: 0 0 2.5rem;
+            background: var(--paper);
+        }
+
+        /* ── Hero Header — AlirezaSadjadipour.ir aesthetic ────────── */
+        .header {
+            background: var(--hero-bg);
+            color: var(--hero-fg);
+            padding: 3.5rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        /* Subtle grain texture via SVG data URI */
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        /* Faint triangle motif — echoes AlirezaSadjadipour.ir Triangles */
+        .header-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        .header-eyebrow {
+            font-family: "Alibaba", sans-serif;
+            font-weight: 400;
+            font-size: 0.68rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--hero-fg-muted);
+            margin-bottom: 1.1rem;
+        }
+
+        h1 {
+            font-family: "Alibaba", sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            color: var(--hero-fg);
+            margin: 0 0 1.6rem;
+        }
+
+        h1 .h1-accent {
+            display: block;
+            color: var(--hero-accent);
+        }
+
+        .header-rule {
+            display: block;
+            width: 72px;
+            height: 1px;
+            background: var(--hero-accent);
+            margin: 0 0 1.4rem auto;
+            opacity: 0.75;
+        }
+
+        .subtitle {
+            font-family: "Alibaba", sans-serif;
+            font-weight: 300;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: var(--hero-fg-muted);
+            max-width: 520px;
+            margin-left: auto;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 0 1.8rem;
+            margin-top: 1.5rem;
+            font-family: "Alibaba", sans-serif;
+            font-weight: 400;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--hero-fg-subtle);
+        }
+
+        /* ── Document body area ─────────────────────────────────── */
+        .doc-body {
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        .abstract {
+            margin: clamp(1.5rem, 4vw, 2.5rem) 0;
+            padding: 1rem 1.1rem;
+            border-right: 4px solid var(--navy);
+            background: var(--navy-soft);
+            text-align: justify;
+        }
+
+        .section {
+            margin: clamp(1.75rem, 4vw, 2.75rem) 0;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-size: 14.5pt;
+        }
+
+        h3 {
+            margin-bottom: 7px;
+            color: var(--ink);
+            font-size: 12pt;
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 8px 22px 8px 0;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        strong {
+            font-weight: 750;
+        }
+
+        .evidence-grid,
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 13px;
+        }
+
+        .evidence-card {
+            padding: 13px;
+            border: 1px solid var(--line);
+            background: var(--soft);
+            text-align: center;
+        }
+
+        .evidence-card .value {
+            color: var(--navy);
+            font-size: 17pt;
+            font-weight: 800;
+        }
+
+        .evidence-card .label {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 9pt;
+        }
+
+        .strategy-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            border: 1.5px solid var(--ink);
+            background: var(--paper);
+        }
+
+        .strategy-card.recommended {
+            border: 3px solid var(--navy);
+            background: #fbfcfe;
+        }
+
+        .tag {
+            align-self: flex-start;
+            margin-bottom: 8px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--navy);
+            color: #fff;
+            font-size: 8pt;
+            font-weight: 700;
+        }
+
+        .strategy-number {
+            color: var(--muted);
+            font-size: 8.5pt;
+            font-weight: 700;
+        }
+
+        .strategy-card h3 {
+            color: var(--navy);
+            font-size: 14pt;
+        }
+
+        .strategy-card .purpose {
+            min-height: 72px;
+            color: var(--muted);
+            font-size: 9.3pt;
+        }
+
+        .price {
+            margin: 9px 0 2px;
+            color: var(--navy);
+            font-size: 16pt;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .eta {
+            margin-bottom: 10px;
+            color: var(--green);
+            font-size: 9.5pt;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .strategy-card ul {
+            flex-grow: 1;
+            margin-right: 17px;
+            font-size: 9pt;
+        }
+
+        .note {
+            margin-top: 10px;
+            padding-top: 9px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 8.5pt;
+        }
+
+        table {
+            width: 100%;
+            margin: 12px 0;
+            border-collapse: collapse;
+            font-size: 9.2pt;
+        }
+
+        th {
+            padding: 8px;
+            border-top: 1.5px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
+            background: var(--soft);
+            text-align: right;
+        }
+
+        td {
+            padding: 7px 8px;
+            border-bottom: 1px solid var(--line);
+            vertical-align: top;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 1.5px solid var(--ink);
+        }
+
+        .yes {
+            color: var(--green);
+            font-weight: 800;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .step {
+            padding: 11px;
+            border-top: 3px solid var(--navy);
+            background: var(--soft);
+        }
+
+        .step .week {
+            color: var(--navy);
+            font-size: 8.5pt;
+            font-weight: 800;
+        }
+
+        .step .name {
+            margin: 3px 0;
+            font-weight: 750;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 8.5pt;
+            text-align: right;
+        }
+
+        .callout {
+            margin: 17px 0;
+            padding: 13px 15px;
+            border: 1.5px solid var(--navy);
+            text-align: center;
+        }
+
+        .callout strong {
+            color: var(--navy);
+        }
+
+        .terms {
+            columns: 2;
+            column-gap: 32px;
+        }
+
+        .terms li {
+            break-inside: avoid;
+        }
+
+        .payment {
+            padding: 13px 15px;
+            background: var(--soft);
+            border-right: 4px solid var(--navy);
+        }
+
+        .footer {
+            margin-top: 28px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 8.5pt;
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            .header {
+                padding: 2.5rem 0 2rem;
+            }
+
+            .strategy-grid,
+            .evidence-grid,
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+
+            .strategy-card .purpose {
+                min-height: auto;
+            }
+
+            .terms {
+                columns: 1;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            body {
+                background: #fff;
+                font-size: 9.7pt;
+            }
+
+            .container {
+                width: auto;
+                min-height: 0;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 2rem 0 1.8rem;
+            }
+
+            .header-inner {
+                padding: 0 16mm;
+            }
+
+            .doc-body {
+                padding: 0 16mm;
+            }
+
+            .strategy-card,
+            .evidence-card,
+            .step,
+            table,
+            .callout,
+            .payment {
+                break-inside: avoid;
+            }
+
+            h2, h3 {
+                break-after: avoid;
+            }
+
+            .section {
+                break-inside: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <svg class="header-art" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <polygon transform="translate(-50 90) rotate(18) scale(1.35)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+                <polygon transform="translate(70 260) rotate(-70) scale(0.55)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+                <polygon transform="translate(180 60) rotate(130) scale(0.8)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+                <polygon transform="translate(120 460) rotate(25) scale(1.1)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+                <polygon transform="translate(280 330) rotate(-130) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+                <polygon transform="translate(350 110) rotate(60) scale(1.0)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+                <polygon transform="translate(480 430) rotate(-25) scale(0.7)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+                <polygon transform="translate(560 -40) rotate(150) scale(0.9)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+                <polygon transform="translate(650 230) rotate(-95) scale(0.5)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+                <polygon transform="translate(760 60) rotate(35) scale(0.85)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+                <polygon transform="translate(840 350) rotate(145) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+                <polygon transform="translate(940 120) rotate(-55) scale(1.2)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+                <polygon transform="translate(1000 480) rotate(95) scale(1.0)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+            </svg>
+            <div class="header-inner">
+                <h1>پروپوزال بهینه‌سازی سئو وب‌سایت دریا تأمین</h1>
+                <p class="subtitle">اصلاح زیرساخت و محتوای موجود، توسعه هدفمند و تقویت اعتبار تخصصی</p>
+                <div class="meta">
+                    <span>کارگزار: علیرضا سجادی پور</span>
+                    <span>مخاطب: شرکت دریا تأمین</span>
+                    <span>بازار هدف: جست‌وجوی فارسی در ایران</span>
+                    <span>تاریخ: شهریور ۱۴۰۵</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="doc-body">
+            <section class="abstract">
+                وب‌سایت دریا تأمین هم‌اکنون دارای محتوای تخصصی گسترده، سابقه اجرایی قابل اتکا و جایگاه‌های مناسب در برخی جست‌وجوهای مهم است. پیشنهاد حاضر به جای تولید انبوه و غیرهدفمند محتوا، ابتدا موانع اصلی رشد را شناسایی و اصلاح می‌کند و سپس، در صورت انتخاب، با انتشار هدفمند و تقویت اعتبار تخصصی مسیر رشد را ادامه می‌دهد.
+            </section>
+
+        <section class="section">
+            <h2>۱. وضعیت فعلی و فرصت پروژه</h2>
+            <p>بررسی اولیه نشان می‌دهد مسئله اصلی وب‌سایت کمبود مطلق محتوا نیست؛ بلکه لازم است مشخص شود هر موضوع باید با کدام صفحه رتبه بگیرد، کدام صفحات با یکدیگر هم‌پوشانی دارند و چه موانع فنی یا محتوایی مانع رشد شده‌اند.</p>
+
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <div class="value">حدود ۹۴</div>
+                    <div class="label">مقاله موجود برای بررسی و اولویت‌بندی</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="value">رتبه حدود ۲</div>
+                    <div class="label">برای «رنگ دریایی» در تصویر ارائه‌شده</div>
+                </div>
+                <div class="evidence-card">
+                    <div class="value">رتبه حدود ۴</div>
+                    <div class="label">برای «رنگ صنعتی» در تصویر ارائه‌شده</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <strong>هدف اصلی:</strong> شناسایی و رفع مهم‌ترین موانع داخلی رتبه‌گیری، حفظ جایگاه‌های فعلی و تمرکز بر موضوعاتی که بیشترین ظرفیت واقعی رشد را دارند.
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۲. راهبردهای پیشنهادی</h2>
+            <p>سه راهبرد زیر به‌صورت مستقل یا مکمل قابل اجرا هستند. راهبرد «جراحی سئو» نقطه شروع پیشنهادی است؛ دو راهبرد دیگر می‌توانند پس از آن یا با هم‌پوشانی کنترل‌شده اجرا شوند.</p>
+
+            <div class="strategy-grid">
+                <article class="strategy-card recommended">
+                    <span class="tag">پیشنهاد اصلی</span>
+                    <span class="strategy-number">راهبرد اول</span>
+                    <h3>جراحی سئو</h3>
+                    <p class="purpose">ورود هدفمند به سایت، تشخیص مشکلات اثرگذار، اصلاح ساختار و محتوای موجود، ثبت تغییرات و خروج پس از کنترل نتیجه.</p>
+                    <div class="price">۴۵ تا ۷۰ میلیون تومان</div>
+                    <div class="eta">زمان اجرا: ۴ تا ۶ هفته</div>
+                    <ul>
+                        <li>دسترسی و تحلیل Search Console، آمار سایت و وردپرس</li>
+                        <li>بررسی نظام‌مند تمام مقالات و صفحات مهم</li>
+                        <li>تعیین صفحه هدف برای کلمات و موضوعات اولویت‌دار</li>
+                        <li>رفع هم‌پوشانی، ضعف لینک‌سازی داخلی و مشکلات ایندکس</li>
+                        <li>بهینه‌سازی صفحات دارای ارزش و ظرفیت رشد</li>
+                        <li>اصلاح الگوهای تکرارشونده در عنوان، ساختار و متادیتا</li>
+                        <li>گزارش کامل اقدامات و پیشنهادهای باقی‌مانده</li>
+                    </ul>
+                    <p class="note">دامنه دقیق اصلاحات پس از دریافت دسترسی و بررسی وضعیت فنی نهایی می‌شود. هدف، اصلاح همه مشکلات مهم است؛ نه بازنویسی غیرضروری همه صفحات.</p>
+                </article>
+
+                <article class="strategy-card">
+                    <span class="strategy-number">راهبرد دوم</span>
+                    <h3>تداوم هدفمند</h3>
+                    <p class="purpose">حفظ حضور به‌روز سایت و توسعه موضوعات ارزشمند بر اساس داده، بدون تعهد به تولید مقاله‌های تکراری و کم‌اثر.</p>
+                    <div class="price">۳۰ تا ۴۵ میلیون تومان</div>
+                    <div class="eta">زمان اجرا: ۱۲ هفته</div>
+                    <ul>
+                        <li>یک اقدام محتوایی مؤثر در هر هفته</li>
+                        <li>به‌روزرسانی مقاله یا صفحه تجاری دارای ظرفیت رشد</li>
+                        <li>تولید صفحه جدید فقط برای خلأ جست‌وجویی اثبات‌شده</li>
+                        <li>انتشار گزارش پروژه یا مطالعه موردی در صورت وجود داده</li>
+                        <li>ادامه لینک‌سازی داخلی و بهبود صفحات بر اساس Search Console</li>
+                        <li>گزارش کوتاه ماهانه از اقدامات و روند مشاهده‌شده</li>
+                    </ul>
+                    <p class="note">«یک اقدام محتوایی در هفته» ممکن است مقاله جدید، به‌روزرسانی اساسی، مطالعه موردی یا تقویت یک صفحه محصول/کاربرد باشد.</p>
+                </article>
+
+                <article class="strategy-card">
+                    <span class="strategy-number">راهبرد سوم</span>
+                    <h3>اعتبار تخصصی</h3>
+                    <p class="purpose">تبدیل سوابق، پروژه‌ها، گواهی‌ها و روابط صنعتی دریا تأمین به شواهد قابل مشاهده و منابع قابل ارجاع در وب.</p>
+                    <div class="price">۳۵ تا ۶۰ میلیون تومان</div>
+                    <div class="eta">زمان اجرا: ۸ تا ۱۲ هفته</div>
+                    <ul>
+                        <li>فهرست‌برداری از پروژه‌ها، تأییدیه‌ها و دارایی‌های اعتباری</li>
+                        <li>تدوین دو مطالعه موردی از پروژه‌های منتخب</li>
+                        <li>بهبود صفحه گواهی‌ها و معرفی روشن تأییدیه‌های مهم</li>
+                        <li>افزودن شواهد مرتبط به صفحات اولویت‌دار</li>
+                        <li>بررسی اشاره‌های بدون لینک و فرصت‌های شرکا و انجمن‌ها</li>
+                        <li>ارتباط هدفمند با مجموعه‌های مرتبط و ثبت نتایج</li>
+                    </ul>
+                    <p class="note">این راهبرد به همکاری دریا تأمین برای ارائه مستندات، مجوز انتشار پروژه‌ها و معرفی به شرکا وابسته است. تعداد لینک یا انتشار شخص ثالث قابل تضمین نیست.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۳. مقایسه راهبردها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>خدمت</th>
+                        <th>جراحی سئو</th>
+                        <th>تداوم هدفمند</th>
+                        <th>اعتبار تخصصی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>تحلیل داده و ساختار سایت</td>
+                        <td class="yes">کامل</td>
+                        <td>در حد نیاز ادامه کار</td>
+                        <td>متمرکز بر اعتبار و لینک</td>
+                    </tr>
+                    <tr>
+                        <td>بررسی مقالات و صفحات موجود</td>
+                        <td class="yes">سراسری و اولویت‌بندی‌شده</td>
+                        <td>موردی و هفتگی</td>
+                        <td>صفحات مرتبط با شواهد</td>
+                    </tr>
+                    <tr>
+                        <td>اصلاح فنی و هم‌پوشانی صفحات</td>
+                        <td class="yes">محور اصلی</td>
+                        <td>اصلاحات محدود بعدی</td>
+                        <td class="muted">خارج از محور اصلی</td>
+                    </tr>
+                    <tr>
+                        <td>محتوای تازه</td>
+                        <td>فقط در صورت ضرورت</td>
+                        <td class="yes">یک اقدام در هفته</td>
+                        <td>مطالعه موردی و منابع اعتباری</td>
+                    </tr>
+                    <tr>
+                        <td>پروژه، گواهی و اعتبار بیرونی</td>
+                        <td>اتصال شواهد موجود</td>
+                        <td>انتشار تدریجی</td>
+                        <td class="yes">محور اصلی</td>
+                    </tr>
+                    <tr>
+                        <td>مناسب برای</td>
+                        <td>رفع موانع و سامان‌دهی سریع</td>
+                        <td>رشد مستمر پس از اصلاح</td>
+                        <td>تقویت اعتماد و تمایز صنعتی</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>۴. روند اجرای راهبرد اصلی</h2>
+            <div class="timeline">
+                <div class="step">
+                    <div class="week">هفته اول</div>
+                    <div class="name">تشخیص</div>
+                    <p>دریافت دسترسی، استخراج داده، خزش کامل و شناسایی موانع اصلی.</p>
+                </div>
+                <div class="step">
+                    <div class="week">هفته دوم</div>
+                    <div class="name">نقشه درمان</div>
+                    <p>تعیین صفحات هدف، اولویت‌ها، هم‌پوشانی‌ها و اصلاحات سراسری.</p>
+                </div>
+                <div class="step">
+                    <div class="week">هفته دوم تا پنجم</div>
+                    <div class="name">اجرا</div>
+                    <p>اصلاح فنی، ساختاری، محتوایی و لینک‌سازی صفحات منتخب.</p>
+                </div>
+                <div class="step">
+                    <div class="week">هفته پنجم تا ششم</div>
+                    <div class="name">کنترل و تحویل</div>
+                    <p>کنترل ایندکس و کیفیت اجرا، ثبت تغییرات و گزارش نهایی.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۵. موضوعات اولیه مورد تمرکز</h2>
+            <p>فهرست ارسالی کارفرما به‌عنوان نقطه شروع استفاده می‌شود و پس از مشاهده داده‌های واقعی، اولویت و صفحه هدف هر موضوع مشخص خواهد شد:</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>رنگ صنعتی</td>
+                        <td>رنگ مخازن سوخت</td>
+                        <td>رنگ مخازن پتروشیمی</td>
+                    </tr>
+                    <tr>
+                        <td>رنگ اپوکسی پلی‌آمید</td>
+                        <td>رنگ اپوکسی زینک‌ریچ</td>
+                        <td>رنگ ماستیک اپوکسی</td>
+                    </tr>
+                    <tr>
+                        <td>رنگ پلی‌یورتان</td>
+                        <td>رنگ سوله</td>
+                        <td>رنگ اپوکسی فنولیک</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="muted">انتخاب نهایی بر اساس میزان جست‌وجو، جایگاه فعلی، ارزش تجاری، رقابت و تناسب صفحه انجام می‌شود؛ بنابراین فهرست بالا تعهد به رتبه مشخص برای هر عبارت نیست.</p>
+        </section>
+
+        <section class="section">
+            <h2>۶. ترکیب‌های پیشنهادی همکاری</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ترکیب</th>
+                        <th>مدت تقریبی</th>
+                        <th>بازه سرمایه‌گذاری</th>
+                        <th>کاربرد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>جراحی سئو</strong></td>
+                        <td>۴ تا ۶ هفته</td>
+                        <td><strong>۴۵ تا ۷۰ میلیون تومان</strong></td>
+                        <td>انتخاب اقتصادی برای تشخیص و اصلاح مشکلات موجود</td>
+                    </tr>
+                    <tr>
+                        <td><strong>جراحی + تداوم</strong></td>
+                        <td>حدود ۴ ماه</td>
+                        <td><strong>۷۵ تا ۱۱۵ میلیون تومان</strong></td>
+                        <td>اصلاح کامل و سپس سه ماه فعالیت محتوایی هدفمند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>جراحی + اعتبار</strong></td>
+                        <td>حدود ۳ تا ۴ ماه با هم‌پوشانی</td>
+                        <td><strong>۸۰ تا ۱۳۰ میلیون تومان</strong></td>
+                        <td>اصلاح سایت همراه با تقویت پروژه‌ها، گواهی‌ها و ارجاعات صنعتی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>برنامه جامع سه‌راهبردی</strong></td>
+                        <td>حدود ۴ ماه با اجرای هم‌زمان کنترل‌شده</td>
+                        <td><strong>۱۱۰ تا ۱۶۰ میلیون تومان</strong></td>
+                        <td>اصلاح، تداوم محتوایی و اعتبارسازی در یک برنامه یکپارچه</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="muted">مبالغ ترکیبی به دلیل هم‌پوشانی فعالیت‌ها کمتر از جمع ساده سه راهبرد محاسبه شده‌اند.</p>
+        </section>
+
+        <section class="section">
+            <h2>۷. شرایط تعیین مبلغ و زمان نهایی</h2>
+            <ul class="terms">
+                <li>دسترسی کامل و به‌موقع به Search Console، وردپرس و آمار سایت</li>
+                <li>تعداد و شدت مشکلات فنی، ایندکس و هم‌پوشانی صفحات</li>
+                <li>نیاز یا عدم نیاز به برنامه‌نویسی قالب و افزونه‌ها</li>
+                <li>حجم اصلاحات محتوایی و تعداد بازبینی‌های تخصصی</li>
+                <li>کیفیت و قابلیت انتشار اطلاعات پروژه‌ها و گواهی‌ها</li>
+                <li>سرعت تأیید ادعاهای فنی توسط نماینده دریا تأمین</li>
+                <li>همکاری شرکا، مشتریان و رسانه‌ها در راهبرد اعتبار تخصصی</li>
+                <li>عدم وقوع بازطراحی، مهاجرت یا تغییر عمده سایت حین پروژه</li>
+            </ul>
+            <p>پیش از آغاز، مبلغ مبنا با توجه به اطلاعات در دسترس و در بازه اعلام‌شده توافق می‌شود. پس از هفته نخست «جراحی سئو»، دامنه قطعی اصلاحات تثبیت خواهد شد. هرگونه توسعه خارج از دامنه فقط با تأیید کتبی کارفرما انجام می‌شود و بدون این تأیید، مبلغ از سقف توافق‌شده فراتر نخواهد رفت. مشکلات خارج از سئو، از جمله آلودگی امنیتی، بازطراحی کامل یا توسعه اختصاصی، جداگانه برآورد خواهند شد.</p>
+        </section>
+
+        <section class="section">
+            <h2>۸. معیار تحویل و حدود تعهد</h2>
+            <p><strong>تعهد اجرایی:</strong> انجام بررسی‌ها، اصلاحات، تولیدات و گزارش‌های توافق‌شده با ثبت شفاف تغییرات و کنترل فنی پس از اجرا.</p>
+            <p><strong>معیارهای ارزیابی:</strong> وضعیت ایندکس، پوشش موضوعات هدف، جایگاه صفحات، نمایش و کلیک در Search Console و اقدامات تماس در صورت وجود رهگیری مناسب.</p>
+            <div class="callout">
+                <strong>توضیح ضروری:</strong> رتبه مشخص، صفحه اول برای تمام عبارات، تعداد قطعی کلیک یا تعداد قطعی لینک خارجی قابل تضمین نیست؛ زیرا نتیجه نهایی تحت کنترل موتور جست‌وجو، رقبا و طرف‌های ثالث است. تعهد این همکاری بر کیفیت تشخیص، اجرا و گزارش‌دهی است.
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۹. نحوه پرداخت پیشنهادی</h2>
+            <div class="payment">
+                <p><strong>جراحی سئو:</strong> ۴۰٪ در آغاز، ۳۰٪ پس از تحویل نقشه اصلاحات و ۳۰٪ پس از اجرای نهایی و گزارش.</p>
+                <p><strong>تداوم هدفمند:</strong> پرداخت ماهانه در ابتدای هر ماه از دوره سه‌ماهه.</p>
+                <p><strong>اعتبار تخصصی:</strong> ۴۰٪ در آغاز، ۳۰٪ پس از آماده‌سازی دارایی‌های اعتباری و ۳۰٪ پس از پایان مرحله انتشار و ارتباطات.</p>
+                <p>مبلغ دقیق، برنامه پرداخت و جزئیات تحویل در قرارداد نهایی درج می‌شود.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۱۰. جمع‌بندی</h2>
+            <p>پیشنهاد اصلی، آغاز همکاری با «جراحی سئو» است تا ابتدا داده‌های واقعی بررسی و مشکلات اثرگذار اصلاح شوند. پس از آن، دریا تأمین می‌تواند با توجه به نتیجه و اولویت تجاری، راهبرد «تداوم هدفمند»، «اعتبار تخصصی» یا ترکیب هر دو را انتخاب کند.</p>
+            <div class="callout">
+                <strong>مسیر پیشنهادی:</strong> تشخیص دقیق ← اصلاح مشکلات اصلی ← کنترل نتیجه ← ادامه هدفمند فقط در صورت توجیه داده و کسب‌وکار
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>این سند یک پیشنهاد اولیه است و دامنه نهایی خدمات پس از دریافت دسترسی و تأیید شرایط اجرایی در قرارداد تثبیت خواهد شد.</p>
+            <p>شهریور ۱۴۰۵</p>
+        </footer>
+        </div>
+    </main>
+</body>
+</html>

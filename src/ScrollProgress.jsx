@@ -2,17 +2,16 @@ import React from 'react';
 import { motion, useTransform } from 'framer-motion';
 
 const chapters = [
-  { label: 'Overture',       number: '—'  },
-  { label: 'Web-Apps', number: 'I'  },
-  { label: 'Agentic AI',     number: 'II' },
-  { label: 'Motion & Craft', number: 'III'},
-  { label: 'The Network',    number: 'IV' },
-  { label: 'Sound',          number: 'V'  },
-  { label: 'Languages',      number: 'VI' },
-  { label: 'Coda',           number: '∞'  },
+  { label: 'Overture',         number: '—'  },
+  { label: 'Full-Stack Eng',   number: 'I'  },
+  { label: 'Agentic AI',       number: 'II' },
+  { label: 'Systems & Ops',    number: 'III'},
+  { label: 'Soft Skills',      number: 'IV' },
+  { label: 'Tech Index',       number: 'V'  },
+  { label: 'Coda',             number: '∞'  },
 ];
 
-const ACCENT_COLORS = ['#F5F0E8', '#a30bf5ff', '#2DD4BF', '#F59E0B', '#EF4444', '#EC4899', '#A78BFA', '#4D3E33'];
+const ACCENT_COLORS = ['#F5F0E8', '#ff2760', '#2DD4BF', '#F59E0B', '#A78BFA', '#48ec56', '#F5F0E8'];
 
 const ScrollProgress = ({ scrollYProgress, activeChapter }) => {
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
