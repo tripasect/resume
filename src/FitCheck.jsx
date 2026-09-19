@@ -12,6 +12,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getLocaleMeta } from '@/i18n';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 // Inlined at build time by Next.js; empty string means same-origin `/api/*`.
