@@ -33,6 +33,7 @@ export const VIEWPORT = {
   viewportFit: 'cover',
   colorScheme: 'dark',
   themeColor: SITE.themeColor,
+  userScalable: false,
 }
 
 /** Per-locale metadata: titles, canonical, hreflang, social cards, robots. */

@@ -12,7 +12,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getLocaleMeta } from '@/i18n';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 // Inlined at build time by Next.js; empty string means same-origin `/api/*`.
@@ -24,63 +23,6 @@ const VERDICT_COLORS = {
   PARTIAL_FIT: '#f59e0b',
   POOR_FIT: '#ef4444',
 };
-
-// ── Radar Chart ───────────────────────────────────────────────────────────────
-function RadarChart({ skills, strings, dir }) {
-  if (!skills?.length) return null;
-
-  const SIZE = 260;
-  const CENTER = SIZE / 2;
-  const RADIUS = 72; // Decreased slightly to give labels more room
-  const N = skills.length;
-  const angle = (i) => (Math.PI * 2 * i) / N - Math.PI / 2;
-  const pt    = (i, r) => ({
-    x: CENTER + r * Math.cos(angle(i)),
-    y: CENTER + r * Math.sin(angle(i)),
-  });
-
-  const rings = [0.25, 0.5, 0.75, 1].map((f) =>
-    skills.map((_, i) => { const { x, y } = pt(i, RADIUS * f); return `${x},${y}`; }).join(' ')
-  );
-  const coverage = skills.map((s, i) => { const { x, y } = pt(i, RADIUS * (s.alireza_score / 100)); return `${x},${y}`; }).join(' ');
-  const demand   = skills.map((s, i) => { const { x, y } = pt(i, RADIUS * (s.importance / 100));    return `${x},${y}`; }).join(' ');
-
-  return (
-    <div className="fc-radar-wrap">
-      {/* Expanded viewBox to -45 to 305 horizontally (350 width) and -10 to 270 vertically (280 height) for extra legend clearance, centering the chart at 130,130 */}
-      <svg viewBox="-45 -10 350 280" className="fc-radar" aria-label={strings.radarAriaLabel} role="img">
-        {rings.map((pts, i) => (
-          <polygon key={i} points={pts} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        ))}
-        {skills.map((_, i) => {
-          const { x, y } = pt(i, RADIUS);
-          return <line key={i} x1={CENTER} y1={CENTER} x2={x} y2={y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />;
-        })}
-        <polygon points={demand}   fill="rgba(239,68,68,0.12)"  stroke="rgba(239,68,68,0.45)"  strokeWidth="1.5" strokeLinejoin="round" />
-        <polygon points={coverage} fill="rgba(34,197,94,0.18)"  stroke="rgba(34,197,94,0.75)"  strokeWidth="2"   strokeLinejoin="round" />
-        {skills.map((s, i) => {
-          const LABEL_R = RADIUS + 12; // Decreased label offset slightly to stay within viewBox safety bounds
-          const { x, y } = pt(i, LABEL_R);
-          const anchor = x < CENTER - 4 ? 'end' : x > CENTER + 4 ? 'start' : 'middle';
-          return (
-            <text key={i} x={x} y={y} textAnchor={anchor} dominantBaseline="middle"
-              fontSize="8" fill="rgba(245,240,232,0.7)" fontFamily="inherit" dir={dir}>
-              {s.name}
-            </text>
-          );
-        })}
-        {skills.map((s, i) => {
-          const { x, y } = pt(i, RADIUS * (s.alireza_score / 100));
-          return <circle key={i} cx={x} cy={y} r="3" fill="#22c55e" stroke="#000" strokeWidth="0.75" />;
-        })}
-      </svg>
-      <div className="fc-radar-legend">
-        <span className="fc-leg-swatch" style={{ background: 'rgba(34,197,94,0.75)' }} /> {strings.coverage}
-        <span className="fc-leg-swatch" style={{ background: 'rgba(239,68,68,0.45)', marginLeft: 10 }} /> {strings.demand}
-      </div>
-    </div>
-  );
-}
 
 // ── Skill Bar ─────────────────────────────────────────────────────────────────
 function SkillBar({ skill }) {
@@ -116,7 +58,6 @@ function SkillBar({ skill }) {
 
 // ── Inner panel content (shared between desktop + mobile) ─────────────────────
 function PanelContent({ locale, strings }) {
-  const dir = getLocaleMeta(locale).dir === 'rtl' ? 'rtl' : 'ltr';
   const [text,     setText]     = useState('');
   const [status,   setStatus]   = useState('idle'); // idle | loading | done | error
   const [result,   setResult]   = useState(null);
@@ -251,9 +192,6 @@ function PanelContent({ locale, strings }) {
                   <p className="fc-summary">{result.summary}</p>
                 </div>
               </div>
-
-              {/* Radar */}
-              <RadarChart skills={result.skills_required} strings={strings} dir={dir} />
 
               {/* Skill bars */}
               <div className="fc-skill-bars">

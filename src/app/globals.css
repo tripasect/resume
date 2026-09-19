@@ -1253,35 +1253,6 @@ body {
   margin: 0 0 0.4rem;
 }
 
-/* Radar */
-.fc-radar-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.fc-radar {
-  width: 100%;
-  max-width: 260px;
-  overflow: visible; /* Prevents long labels at the edges from being masked/clipped */
-}
-
-.fc-radar-legend {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.65rem;
-  color: rgba(245,240,232,0.45);
-}
-
-.fc-leg-swatch {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  flex-shrink: 0;
-}
-
 /* Skill bars */
 .fc-skill-bars { display: flex; flex-direction: column; gap: 0.75rem; }
 

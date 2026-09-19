@@ -165,10 +165,7 @@ softskills: {
     recommendation: 'توصیه:',
     me: 'من',
     need: 'نیاز',
-    coverage: 'پوشش',
-    demand: 'تقاضا',
     skillBreakdown: 'تحلیل مهارت‌ها',
-    radarAriaLabel: 'نمودار راداری مهارت‌ها',
     disclaimer:
       'فقط جنبهٔ مشورتی دارد — توسط یک LLM که از سابقهٔ مستند من باخبر است ساخته شده. بررسی مستقل بر عهدهٔ خودتان است.',
     verdicts: {
