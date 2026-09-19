@@ -113,7 +113,6 @@ export default function LanguagePickerModal({ locale }) {
             autoFocus={locale === 'en'}
           >
             <span className="lp-option-label">English</span>
-            <span className="lp-option-sub">Continue in English</span>
           </button>
 
           <button
@@ -124,7 +123,6 @@ export default function LanguagePickerModal({ locale }) {
             autoFocus={locale === 'fa'}
           >
             <span className="lp-option-label">فارسی</span>
-            <span className="lp-option-sub" dir="rtl">ادامه به فارسی</span>
           </button>
         </div>
       </div>

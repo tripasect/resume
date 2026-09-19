@@ -1682,18 +1682,19 @@ body {
   align-items: center;
   gap: 0.35rem;
   padding: 1.25rem 2.25rem;
-  background: rgba(245, 240, 232, 0.04);
+  background: rgba(245, 240, 232, 0.02);
   border: 1px solid rgba(245, 240, 232, 0.14);
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, transform 0.15s;
-  min-width: 10rem;
+  width: 220px;
+  max-width: 220px;
 }
 
 .lp-option:hover,
 .lp-option:focus-visible {
-  background: rgba(245, 240, 232, 0.1);
+  background: rgba(245, 240, 232, 0.05);
   border-color: var(--accent-2);
-  transform: translateY(-2px);
+
   outline: none;
 }
 
