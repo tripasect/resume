@@ -1607,3 +1607,126 @@ body {
 [dir='rtl'] .chapter-title {
   line-height: 1.15;
 }
+
+/* Persian chapter titles are longer words that overflow the viewport at the
+   4.5rem floor used for Latin. Drop the minimum to let them scale freely on
+   narrow screens. The upper cap and the vw coefficient stay the same so the
+   title still fills wide viewports identically to the English version. */
+@media (max-width: 640px) {
+  [dir='rtl'] .chapter-title {
+    font-size: clamp(2rem, 10vw, 11rem);
+  }
+}
+
+/* ─── Language-picker modal ──────────────────────────────── */
+.lp-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.96);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9998;
+  animation: lp-fade-in 0.25s ease both;
+}
+
+.lp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  outline: none;
+  animation: lp-slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: none; /* let clicks fall through to the backdrop */
+}
+
+/* Only the card area itself is interactive */
+.lp-modal > * {
+  pointer-events: auto;
+}
+
+.lp-eyebrow {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+}
+
+.lp-title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  font-weight: 500;
+  color: var(--fg);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.lp-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lp-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.25rem 2.25rem;
+  background: rgba(245, 240, 232, 0.04);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  min-width: 10rem;
+}
+
+.lp-option:hover,
+.lp-option:focus-visible {
+  background: rgba(245, 240, 232, 0.1);
+  border-color: var(--accent-2);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.lp-option:active {
+  transform: translateY(0);
+}
+
+.lp-option-label {
+  font-family: var(--font-ui);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.lp-option-sub {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+@keyframes lp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lp-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-backdrop,
+  .lp-modal {
+    animation: none;
+  }
+}

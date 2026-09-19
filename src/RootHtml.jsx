@@ -3,6 +3,7 @@ import '@/app/globals.css'
 import { getDictionary, getLocaleMeta } from '@/i18n'
 import { buildJsonLd } from '@/lib/schema'
 import LanguageSwitcher from '@/LanguageSwitcher'
+import LanguagePickerModal from '@/LanguagePickerModal'
 
 /**
  * Shared document shell for every locale.
@@ -30,6 +31,8 @@ export default function RootHtml({ locale, fontClassName, children }) {
         </a>
 
         <LanguageSwitcher locale={locale} label={dict.a11y.languageSwitcherLabel} />
+
+        <LanguagePickerModal locale={locale} />
 
         <script
           type="application/ld+json"

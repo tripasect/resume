@@ -1,6 +1,7 @@
 import '@/app/globals.css'
 
 import { getDictionary } from '@/i18n'
+import { fontClassNames } from '@/i18n/fonts'
 import { SITE } from '@/data/resume'
 
 export const metadata = {
@@ -20,8 +21,13 @@ export default function GlobalNotFound() {
   const en = getDictionary('en')
   const fa = getDictionary('fa')
 
+  // Apply font class names for both locales so every --font-* CSS variable
+  // is defined. The 'en' set (Bebas Neue + Inter + Alexandria) is a superset
+  // of the 'fa' set (Alexandria only), so using the 'en' classes is sufficient.
+  const fontClass = fontClassNames('en')
+
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en" dir="ltr" className={fontClass} suppressHydrationWarning>
       <body>
         <main
           style={{
