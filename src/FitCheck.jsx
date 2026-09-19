@@ -1,26 +1,32 @@
+'use client'
+
 /**
  * FitCheck.jsx
  * ─────────────
- * Desktop : fixed right-side panel, always visible while scrolling.
- * Mobile  : bottom sheet, revealed once Act II enters the viewport,
- *           toggled open/closed with a persistent tab handle.
+ * Desktop : fixed inline-end panel, always visible while scrolling.
+ * Mobile  : bottom sheet, toggled open/closed with a persistent tab handle.
+ *
+ * All copy comes from the locale dictionary, and the chosen locale is forwarded
+ * to the API so the model answers in the language the visitor is reading.
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getLocaleMeta } from '@/i18n';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const API_URL = import.meta.env.VITE_API_URL ?? '';
+// Inlined at build time by Next.js; empty string means same-origin `/api/*`.
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
 
-const VERDICT_META = {
-  STRONG_FIT:  { label: 'Strong Fit',  color: '#22c55e' },
-  GOOD_FIT:    { label: 'Good Fit',    color: '#84cc16' },
-  PARTIAL_FIT: { label: 'Partial Fit', color: '#f59e0b' },
-  POOR_FIT:    { label: 'Poor Fit',    color: '#ef4444' },
+const VERDICT_COLORS = {
+  STRONG_FIT: '#22c55e',
+  GOOD_FIT: '#84cc16',
+  PARTIAL_FIT: '#f59e0b',
+  POOR_FIT: '#ef4444',
 };
 
 // ── Radar Chart ───────────────────────────────────────────────────────────────
-function RadarChart({ skills }) {
+function RadarChart({ skills, strings, dir }) {
   if (!skills?.length) return null;
 
   const SIZE = 260;
@@ -42,7 +48,7 @@ function RadarChart({ skills }) {
   return (
     <div className="fc-radar-wrap">
       {/* Expanded viewBox to -45 to 305 horizontally (350 width) and -10 to 270 vertically (280 height) for extra legend clearance, centering the chart at 130,130 */}
-      <svg viewBox="-45 -10 350 280" className="fc-radar" aria-label="Skills radar chart">
+      <svg viewBox="-45 -10 350 280" className="fc-radar" aria-label={strings.radarAriaLabel} role="img">
         {rings.map((pts, i) => (
           <polygon key={i} points={pts} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
         ))}
@@ -58,7 +64,7 @@ function RadarChart({ skills }) {
           const anchor = x < CENTER - 4 ? 'end' : x > CENTER + 4 ? 'start' : 'middle';
           return (
             <text key={i} x={x} y={y} textAnchor={anchor} dominantBaseline="middle"
-              fontSize="8" fill="rgba(245,240,232,0.7)" fontFamily="inherit">
+              fontSize="8" fill="rgba(245,240,232,0.7)" fontFamily="inherit" dir={dir}>
               {s.name}
             </text>
           );
@@ -69,8 +75,8 @@ function RadarChart({ skills }) {
         })}
       </svg>
       <div className="fc-radar-legend">
-        <span className="fc-leg-swatch" style={{ background: 'rgba(34,197,94,0.75)' }} /> Coverage
-        <span className="fc-leg-swatch" style={{ background: 'rgba(239,68,68,0.45)', marginLeft: 10 }} /> Demand
+        <span className="fc-leg-swatch" style={{ background: 'rgba(34,197,94,0.75)' }} /> {strings.coverage}
+        <span className="fc-leg-swatch" style={{ background: 'rgba(239,68,68,0.45)', marginLeft: 10 }} /> {strings.demand}
       </div>
     </div>
   );
@@ -84,7 +90,7 @@ function SkillBar({ skill }) {
     <div className="fc-skill-row">
       <div className="fc-skill-header">
         <span className="fc-skill-name">{skill.name}</span>
-        <span className="fc-skill-scores">
+        <span className="fc-skill-scores" dir="ltr">
           <span style={{ color: '#22c55e' }}>{skill.alireza_score}</span>
           <span className="fc-skill-sep">vs</span>
           <span style={{ color: '#ef4444' }}>{skill.importance}</span>
@@ -109,7 +115,8 @@ function SkillBar({ skill }) {
 }
 
 // ── Inner panel content (shared between desktop + mobile) ─────────────────────
-function PanelContent({ onClose }) {
+function PanelContent({ locale, strings }) {
+  const dir = getLocaleMeta(locale).dir === 'rtl' ? 'rtl' : 'ltr';
   const [text,     setText]     = useState('');
   const [status,   setStatus]   = useState('idle'); // idle | loading | done | error
   const [result,   setResult]   = useState(null);
@@ -118,22 +125,9 @@ function PanelContent({ onClose }) {
   const bodyRef = useRef(null);
 
   const pickMessage = useCallback(() => {
-    const pool = [
-      'Reviewing history…',
-      'Scanning contributions…',
-      'Parsing requirements…',
-      'Mapping stack…',
-      'Cross-referencing skills…',
-      'Analysing projects…',
-      'Checking infrastructure…',
-      'Evaluating capabilities…',
-      'Balancing strengths…',
-      'Calibrating fit…',
-      'Generating verdict…',
-      'Validating logic…',
-    ];
+    const pool = strings.loadingMessages;
     setLoadingMsg(pool[Math.floor(Math.random() * pool.length)]);
-  }, []);
+  }, [strings.loadingMessages]);
 
   useEffect(() => {
     if (status !== 'loading') return;
@@ -156,7 +150,7 @@ function PanelContent({ onClose }) {
       const res  = await fetch(`${API_URL}/api/fitcheck`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projectDescription: text }),
+        body: JSON.stringify({ projectDescription: text, locale }),
       });
       const responseText = await res.text();
       let data;
@@ -165,8 +159,8 @@ function PanelContent({ onClose }) {
       } catch {
         throw new Error(
           res.ok
-            ? 'The server returned an invalid response. Please try again.'
-            : `The request failed (HTTP ${res.status}). Please try again.`,
+            ? strings.errors.invalidResponse
+            : strings.errors.requestFailed.replace('{status}', String(res.status)),
         );
       }
       if (!res.ok) throw new Error(data?.error ?? `HTTP ${res.status}`);
@@ -178,23 +172,29 @@ function PanelContent({ onClose }) {
         setResult({ raw: data.raw });
         setStatus('done');
       } else {
-        throw new Error('Unexpected response from server.');
+        throw new Error(strings.errors.unexpected);
       }
     } catch (err) {
-      setErrorMsg(err.message ?? 'Something went wrong.');
+      setErrorMsg(err.message ?? strings.errors.generic);
       setStatus('error');
     }
   }
 
-  const vm = result ? (VERDICT_META[result.verdict] ?? VERDICT_META.PARTIAL_FIT) : null;
+  const verdictLabel = result && result.verdict ? strings.verdicts[result.verdict] : null;
+  const verdictColor = result && result.verdict ? VERDICT_COLORS[result.verdict] : undefined;
+  const vm = result
+    ? {
+        label: verdictLabel ?? strings.verdicts.PARTIAL_FIT,
+        color: verdictColor ?? VERDICT_COLORS.PARTIAL_FIT,
+      }
+    : null;
 
   return (
     <div className="fc-panel-inner">
       {/* Header */}
       <div className="fc-panel-header">
         <div className="fc-panel-title-group">
-          {/* <span className="fc-panel-eyebrow">fit check</span> */}
-          <span className="fc-panel-title">Am I right for your project? Ask my AI — it knows my history and will give you an evidence-based, unbiased opinion on whether I&rsquo;m a fit.</span>
+          <span className="fc-panel-title">{strings.title}</span>
         </div>
       </div>
 
@@ -236,7 +236,7 @@ function PanelContent({ onClose }) {
 
               {/* Verdict */}
               <div className="fc-verdict" style={{ borderColor: vm.color }}>
-                <div className="fc-verdict-score" style={{ color: vm.color }}>
+                <div className="fc-verdict-score" style={{ color: vm.color }} dir="ltr">
                   {result.overall_score}<span className="fc-score-denom">/100</span>
                 </div>
                 <div className="fc-verdict-right">
@@ -253,14 +253,14 @@ function PanelContent({ onClose }) {
               </div>
 
               {/* Radar */}
-              <RadarChart skills={result.skills_required} />
+              <RadarChart skills={result.skills_required} strings={strings} dir={dir} />
 
               {/* Skill bars */}
               <div className="fc-skill-bars">
-                <h4 className="fc-section-title">Skill Breakdown</h4>
+                <h4 className="fc-section-title">{strings.skillBreakdown}</h4>
                 <div className="fc-bar-legend">
-                  <span className="fc-bar-leg-swatch fc-bar-leg-cover" /> Me &nbsp;
-                  <span className="fc-bar-leg-swatch fc-bar-leg-demand" /> Need
+                  <span className="fc-bar-leg-swatch fc-bar-leg-cover" /> {strings.me} &nbsp;
+                  <span className="fc-bar-leg-swatch fc-bar-leg-demand" /> {strings.need}
                 </div>
                 {result.skills_required?.map((s, i) => <SkillBar key={i} skill={s} />)}
               </div>
@@ -268,13 +268,13 @@ function PanelContent({ onClose }) {
               {/* Pros / Cons */}
               <div className="fc-proscons">
                 <div>
-                  <h4 className="fc-section-title">Strengths</h4>
+                  <h4 className="fc-section-title">{strings.strengths}</h4>
                   <ul className="fc-list fc-pros-list">
                     {result.pros?.map((p, i) => <li key={i}>{p}</li>)}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="fc-section-title">Gaps</h4>
+                  <h4 className="fc-section-title">{strings.gaps}</h4>
                   <ul className="fc-list fc-cons-list">
                     {result.cons?.map((c, i) => <li key={i}>{c}</li>)}
                   </ul>
@@ -283,20 +283,17 @@ function PanelContent({ onClose }) {
 
               {/* Reasoning */}
               <div className="fc-reasoning">
-                <h4 className="fc-section-title">Chain of thought</h4>
+                <h4 className="fc-section-title">{strings.chainOfThought}</h4>
                 <p>{result.reasoning}</p>
               </div>
 
               {result.recommendation && (
                 <div className="fc-recommendation">
-                  <strong>Recommendation:</strong> {result.recommendation}
+                  <strong>{strings.recommendation}</strong> {result.recommendation}
                 </div>
               )}
 
-              <p className="fc-disclaimer">
-                Advisory only — generated by an LLM briefed on documented history.
-                Conduct your own due diligence.
-              </p>
+              <p className="fc-disclaimer">{strings.disclaimer}</p>
               </>
             )}
             </motion.div>
@@ -307,26 +304,26 @@ function PanelContent({ onClose }) {
       {/* Form pinned to bottom */}
       <form className="fc-form" onSubmit={handleSubmit}>
         <label className="fc-label" htmlFor="fc-input">
-          Describe your project or role:
+          {strings.label}
         </label>
         <textarea
           id="fc-input"
           className="fc-textarea"
           rows={4}
           maxLength={4000}
-          placeholder="E.g. Full-stack SaaS MVP with React + Node, LLM content generation, 6-week timeline…"
+          placeholder={strings.placeholder}
           value={text}
           onChange={(e) => setText(e.target.value)}
           disabled={status === 'loading'}
         />
         <div className="fc-form-footer">
-          <span className="fc-char-count">{text.length}/4000</span>
+          <span className="fc-char-count" dir="ltr">{text.length}/4000</span>
           <button
             type="submit"
             className="fc-submit"
             disabled={status === 'loading' || text.trim().length < 20}
           >
-            {status === 'loading' ? 'Assessing…' : 'Assess'}
+            {status === 'loading' ? strings.assessing : strings.submit}
           </button>
         </div>
       </form>
@@ -336,10 +333,13 @@ function PanelContent({ onClose }) {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 /**
- * @param {{ act2Ref: React.RefObject }} props
- *   act2Ref  — ref attached to the Act II section element in App.jsx
+ * @param {{ locale: string, strings: object }} props
+ *   locale   — forwarded to the API so the verdict matches the page language
+ *   strings  — the `fitCheck` section of the active locale dictionary
  */
-export default function FitCheck({ act2Ref }) {
+export default function FitCheck({ locale, strings }) {
+  const isRtl = getLocaleMeta(locale).dir === 'rtl';
+
   // Mobile: bottom sheet toggled open/closed with a persistent tab handle
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -360,7 +360,9 @@ export default function FitCheck({ act2Ref }) {
   useEffect(() => {
     const onMove = (e) => {
       if (!isDragging.current) return;
-      const delta = dragStartX.current - e.clientX;
+      // The panel is pinned to the inline-end edge. That edge is on the left in
+      // RTL, so widening means dragging right and the delta sign must flip.
+      const delta = (dragStartX.current - e.clientX) * (isRtl ? -1 : 1);
       setPanelWidth(Math.min(520, Math.max(260, dragStartW.current + delta)));
     };
     const onUp = () => { isDragging.current = false; };
@@ -370,16 +372,16 @@ export default function FitCheck({ act2Ref }) {
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup', onUp);
     };
-  }, []);
+  }, [isRtl]);
 
   const closePanel = useCallback(() => setMobileOpen(false), []);
 
   return (
     <>
-      {/* ── DESKTOP: fixed right panel ─────────────────────── */}
+      {/* ── DESKTOP: fixed inline-end panel ────────────────── */}
       <div className="fc-desktop-panel" ref={panelRef} style={{ width: panelWidth }}>
         <div className="fc-drag-handle" onMouseDown={onResizeStart} />
-        <PanelContent />
+        <PanelContent locale={locale} strings={strings} />
       </div>
 
       {/* ── MOBILE: bottom sheet ───────────────────────────── */}
@@ -391,7 +393,7 @@ export default function FitCheck({ act2Ref }) {
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           onClick={() => setMobileOpen(true)}
         >
-          <span className="fc-mobile-tab-label">Am I right for your project? Ask my AI.</span>
+          <span className="fc-mobile-tab-label">{strings.mobileTabLabel}</span>
         </motion.div>
       )}
 
@@ -415,8 +417,8 @@ export default function FitCheck({ act2Ref }) {
               transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Drag handle */}
-              <div className="fc-sheet-handle" onClick={closePanel} aria-label="Close" />
-              <PanelContent onClose={closePanel} />
+              <div className="fc-sheet-handle" onClick={closePanel} aria-label={strings.closeLabel} />
+              <PanelContent locale={locale} strings={strings} />
             </motion.div>
           </>
         )}
