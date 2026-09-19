@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+'use client'
+
+import React from 'react'
+import { motion } from 'framer-motion'
 
 const containerVariants = {
   hidden: {},
@@ -8,7 +10,7 @@ const containerVariants = {
       staggerChildren: 0.12,
     },
   },
-};
+}
 
 const itemVariants = {
   hidden: { opacity: 0, y: 32 },
@@ -17,82 +19,91 @@ const itemVariants = {
     y: 0,
     transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   },
-};
+}
 
 /**
  * ProjectItem
- * @param {string}  name       - Repo/project name (used as alt text / fallback)
- * @param {string}  [logotype] - Path to an SVG/PNG logotype; replaces the text name when present
- * @param {string}  tech       - Language/stack tag
+ * @param {string}  name        - Project name; doubles as the heading and alt text
+ * @param {string}  [logotype]  - SVG path used as a CSS mask instead of the text name
+ * @param {string}  tech        - Language/stack tag
  * @param {string}  description - What it does
  * @param {string}  accentColor - Chapter accent color for the tech tag
+ * @param {string}  [href]      - Live URL; when absent the card renders unlinked
  */
 const ProjectItem = ({ name, logotype, tech, description, accentColor, href }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.85', 'end start'],
-  });
-  const isVisible = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
-
-  return (
-    <motion.div
-      ref={ref}
-      className="project-item"
-      variants={itemVariants}
-    >
-      <a href={href} target="_blank" rel="noreferrer" className="project-link" style={{ display: 'contents' }}>
-        <div className="project-item-header">
-          {logotype ? (
+  const body = (
+    <>
+      <div className="project-item-header">
+        {logotype ? (
+          <>
+            {/* Masked logotypes carry no text, so the name is exposed to
+                crawlers and screen readers as a real heading. */}
+            <h3 className="sr-only">{name}</h3>
             <span
               className="project-logotype"
-              role="img"
-              aria-label={name}
+              aria-hidden="true"
               style={{
                 backgroundColor: accentColor,
                 WebkitMaskImage: `url(${logotype})`,
                 maskImage: `url(${logotype})`,
               }}
             />
-          ) : (
-            <span className="project-name" style={{ color: accentColor }}>
-              {name}
-            </span>
-          )}
-        </div>
-        <p className="project-description">{description}</p>
-        {tech && (
-          <span className="project-tech" style={{ color: accentColor }}>
-            {tech}
-          </span>
+          </>
+        ) : (
+          <h3 className="project-name" style={{ color: accentColor }}>
+            {name}
+          </h3>
         )}
-        <div className="project-rule" />
-      </a>
-    </motion.div>
-  );
-};
+      </div>
+      <p className="project-description">{description}</p>
+      {tech && (
+        <span className="project-tech" dir="ltr" style={{ color: accentColor }}>
+          {tech}
+        </span>
+      )}
+      <div className="project-rule" />
+    </>
+  )
+
+  return (
+    <motion.article className="project-item" variants={itemVariants}>
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="project-link"
+          style={{ display: 'contents' }}
+        >
+          {body}
+        </a>
+      ) : (
+        <div className="project-link" style={{ display: 'contents' }}>
+          {body}
+        </div>
+      )}
+    </motion.article>
+  )
+}
 
 /**
  * ProjectList
  * Wraps a list of ProjectItems with scroll-triggered stagger animation.
  */
 export const ProjectList = ({ projects, accentColor }) => {
-  const ref = useRef(null);
-
   return (
     <motion.div
-      ref={ref}
       className="project-list"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
     >
-      {projects.map((p, i) => (
-        <ProjectItem key={i} {...p} accentColor={accentColor} />
+      {projects.map((p) => (
+        <ProjectItem key={p.name} {...p} accentColor={accentColor} />
       ))}
     </motion.div>
-  );
-};
+  )
+}
 
-export default ProjectItem;
+export default ProjectItem

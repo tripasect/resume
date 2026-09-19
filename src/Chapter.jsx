@@ -1,18 +1,22 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+'use client'
 
-const Chapter = ({ number, title, accentColor, children, id }) => {
-  const ref = useRef(null);
+import React, { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+
+const Chapter = ({ number, labelPrefix, title, accentColor, children, id }) => {
+  const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
-  });
+  })
 
   // Parallax for the watermark number
-  const watermarkY = useTransform(scrollYProgress, [0, 1], ['10%', '-10%']);
+  const watermarkY = useTransform(scrollYProgress, [0, 1], ['10%', '-10%'])
+
+  const titleId = `${id}-title`
 
   return (
-    <section ref={ref} className="chapter" id={id}>
+    <section ref={ref} className="chapter" id={id} aria-labelledby={titleId}>
       {/* Giant roman numeral watermark */}
       <motion.div
         className="chapter-watermark"
@@ -31,9 +35,9 @@ const Chapter = ({ number, title, accentColor, children, id }) => {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <span className="chapter-number-label" style={{ color: accentColor }}>
-          ACT {number}
+          {labelPrefix} {number}
         </span>
-        <h2 className="chapter-title" style={{ color: accentColor }}>{title}</h2>
+        <h2 className="chapter-title" id={titleId} style={{ color: accentColor }}>{title}</h2>
         <div className="chapter-rule" style={{ backgroundColor: accentColor }} />
       </motion.div>
 
@@ -42,7 +46,7 @@ const Chapter = ({ number, title, accentColor, children, id }) => {
         {children}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Chapter;
+export default Chapter
