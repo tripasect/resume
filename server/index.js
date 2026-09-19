@@ -6,7 +6,7 @@
  *
  * Usage:
  *   node server/index.js          (production / standalone)
- *   npm run dev                   (runs vite + this server together)
+ *   npm run dev                   (runs next dev + this server together)
  */
 
 import 'dotenv/config';
@@ -34,20 +34,32 @@ const app = express();
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors({
   origin: [
-    'http://localhost:5173',  // default Vite port
-    'http://localhost:4173',  // vite preview
+    'http://localhost:3000',  // default Next.js dev port
+    'http://localhost:4173',
     /https:\/\/.*alirezasadjadipour\.ir$/,  // production domain
   ],
   methods: ['POST', 'GET'],
 }));
 app.use(express.json({ limit: '16kb' }));
 
+// ── Output language ───────────────────────────────────────────────────────────
+// The JSON keys never change; only the human-readable string values are
+// translated, so the frontend can parse every locale identically.
+const LOCALE_INSTRUCTIONS = {
+  en: 'Write every human-readable string value in English.',
+  fa: 'CRITICAL: You MUST write ALL human-readable string values in Persian (Farsi). This is non-negotiable. Use a professional, formal register and Persian numerals for quantities. Keep technology names, product names, and version numbers in their original Latin form (for example Python, Django, Vue 3, RAG, Pinecone). The summary, reasoning, recommendation, pros, cons, and skill notes — everything readable by a human — MUST be in Persian. No English prose is allowed in the output.',
+};
+
+function normalizeLocale(value) {
+  return typeof value === 'string' && Object.hasOwn(LOCALE_INSTRUCTIONS, value) ? value : 'en';
+}
+
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
 // ── FitCheck endpoint ─────────────────────────────────────────────────────────
 app.post('/api/fitcheck', async (req, res) => {
-  const { projectDescription } = req.body ?? {};
+  const { projectDescription, locale } = req.body ?? {};
 
   if (!projectDescription || typeof projectDescription !== 'string') {
     return res.status(400).json({ error: 'projectDescription is required.' });
@@ -62,7 +74,10 @@ app.post('/api/fitcheck', async (req, res) => {
   }
 
   const messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    {
+      role: 'system',
+      content: `${SYSTEM_PROMPT}\n\n── OUTPUT LANGUAGE ──\n${LOCALE_INSTRUCTIONS[normalizeLocale(locale)]}`,
+    },
     {
       role: 'user',
       content: `Here is the project / role I need help with:\n\n${trimmed}`,
@@ -110,7 +125,7 @@ app.post('/api/fitcheck', async (req, res) => {
     // Sometimes models wrap JSON in triple backticks even when told not to
     const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
     result = JSON.parse(cleaned);
-  } catch (parseErr) {
+  } catch {
     // Return raw text so the frontend can still show something
     console.warn('[FitCheck] Could not parse LLM JSON.');
     console.warn('[FitCheck] Raw content (first 500 chars):', raw.slice(0, 500));
@@ -120,12 +135,12 @@ app.post('/api/fitcheck', async (req, res) => {
   return res.json({ result });
 });
 
-// ── Static files (production) ──────────────────────────────────────────────────
-app.use(express.static(new URL('../dist', import.meta.url).pathname));
+// ── Static files (the exported Next.js site in `out/`) ────────────────────────
+app.use(express.static(new URL('../out', import.meta.url).pathname));
 
-// SPA fallback — any unmatched route serves index.html
+// Any unmatched route serves the exported 404 page.
 app.get('*', (_req, res) => {
-  res.sendFile(new URL('../dist/index.html', import.meta.url).pathname);
+  res.status(404).sendFile(new URL('../out/404.html', import.meta.url).pathname);
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
