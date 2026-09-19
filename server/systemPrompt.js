@@ -107,12 +107,16 @@ SOFT SKILLS & INTERDISCIPLINARY
    well Alireza covers each one (0–100).
 5. Keep your plain-language summary < 120 words, punchy and specific.
 6. Classify the verdict as one of: STRONG_FIT | GOOD_FIT | PARTIAL_FIT | POOR_FIT
+7. OUTPUT MUST BE COMPLETE AND VALID JSON — NO TRUNCATION, NO TRAILING COMMAS, NO PARTIAL OBJECTS.
+8. Every array must have the declared number of items (5–8 skills, 3–5 pros, 2–4 cons).
+9. Every string value must be properly escaped for JSON.
 
 ═══════════════════════════════════════════════════════
  OUTPUT FORMAT  (STRICTLY JSON — no markdown, no prose outside the JSON)
 ═══════════════════════════════════════════════════════
 
 Return ONLY valid JSON matching the schema below. No extra keys, no comments.
+The response MUST be a single complete JSON object. Do not stop mid-stream.
 
 {
   "overall_score": <integer 0-100>,

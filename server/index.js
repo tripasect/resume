@@ -95,8 +95,8 @@ app.post('/api/fitcheck', async (req, res) => {
       body: JSON.stringify({
         model: LLM_MODEL,
         messages,
-        temperature: 0.3,
-        max_tokens: 3000,
+        temperature: 0.2,
+        max_tokens: 4000,
       }),
     });
   } catch (networkErr) {
