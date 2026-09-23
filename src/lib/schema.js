@@ -20,6 +20,8 @@ export function buildJsonLd(locale = 'en') {
   const imageId = `${SITE.url}/#primaryimage`
   const pageId = `${absolute(getLocaleMeta(locale).path)}#profilepage`
   const projectsId = `${absolute(getLocaleMeta(locale).path)}#projects`
+  const occupationId = `${SITE.url}/#occupation`
+  const offerId = `${SITE.url}/#freelance-offer`
 
   const projects = ALL_PROJECTS.map((project, index) => ({
     '@type': 'SoftwareApplication',
@@ -45,6 +47,9 @@ export function buildJsonLd(locale = 'en') {
         description: dict.meta.shortDescription,
         inLanguage: getLocaleMeta(locale).htmlLang,
         publisher: { '@id': personId },
+        about: { '@id': personId },
+        inLanguage: getLocaleMeta(locale).htmlLang,
+        isPartOf: { '@id': websiteId },
       },
       {
         '@type': 'Person',
@@ -74,6 +79,57 @@ export function buildJsonLd(locale = 'en') {
         address: {
           '@type': 'PostalAddress',
           addressCountry: SITE.addressCountry,
+          addressLocality: 'Tehran',
+          addressRegion: 'Tehran',
+        },
+        hasOccupation: {
+          '@id': occupationId,
+          '@type': 'Occupation',
+          name: dict.meta.jobTitle,
+          occupationLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: SITE.addressCountry,
+              addressLocality: 'Tehran',
+            },
+          },
+          skills: SKILLS,
+        },
+        worksFor: {
+          '@type': 'Organization',
+          name: 'Self-Employed',
+        },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'technical support',
+          email: SITE.email,
+          telephone: SITE.phone,
+          availableLanguage: SITE.knowsLanguage,
+        },
+        seeks: {
+          '@type': 'Offer',
+          '@id': offerId,
+          itemOffered: {
+            '@type': 'Service',
+            name: dict.meta.jobTitle,
+            description: dict.meta.shortDescription,
+            serviceType: 'software development',
+            serviceArea: {
+              '@type': 'GeoCircle',
+              geoMidpoint: {
+                '@type': 'GeoCoordinates',
+                latitude: 35.6892,
+                longitude: 51.3890,
+              },
+              geoRadius: '10000000',
+            },
+          },
+          priceCurrency: 'IRR',
+          price: 'Negotiable',
+          seller: { '@id': personId },
+          itemCondition: 'https://schema.org/NewCondition',
+          availability: 'https://schema.org/InStock',
         },
       },
       {

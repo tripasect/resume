@@ -1,0 +1,6 @@
+Contact: mailto:hello@alirezasadjadipour.ir
+Contact: https://github.com/tripasect
+Preferred-Languages: en, fa
+Canonical: https://alirezasadjadipour.com/.well-known/security.txt
+Expires: 2027-01-01T00:00:00.000Z
+Policy: https://alirezasadjadipour.com/.well-known/security-policy

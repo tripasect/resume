@@ -1,0 +1,23 @@
+/* TEAM */
+
+Developer: Alireza Sadjadipour (علیرضا سجادی پور)
+Site: https://alirezasadjadipour.com
+Email: hello@alirezasadjadipour.ir
+Role: Senior Full-Stack & AI Systems Developer
+Location: Tehran, Iran
+
+/* THANKS */
+
+Next.js · React · Vue.js · Cloudflare Pages
+Fonts by Vazirmatn & Alibaba
+
+/* SITE */
+
+Last update: 2026
+Standards: HTML5, CSS3, ECMAScript 2020+
+Language: English & Persian (فارسی)
+
+/* NOTE */
+
+This website is a personal portfolio and résumé of Alireza Sadjadipour.
+Built with care, documented for humans — and for machines that read.

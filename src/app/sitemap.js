@@ -9,7 +9,8 @@ export default function sitemap() {
   const lastModified = new Date()
 
   // Every entry advertises the full alternate-language set so crawlers can pair
-  // the English and Persian pages.
+  // the English and Persian pages. Both locales get equal priority: the
+  // Persian page is the primary target for the Iranian job market.
   const languages = {}
   for (const locale of LOCALES) {
     languages[LOCALE_META[locale].htmlLang] = absolute(LOCALE_META[locale].path)
@@ -19,8 +20,8 @@ export default function sitemap() {
   return LOCALES.map((locale) => ({
     url: absolute(LOCALE_META[locale].path),
     lastModified,
-    changeFrequency: 'monthly',
-    priority: locale === 'en' ? 1 : 0.9,
+    changeFrequency: 'weekly',
+    priority: locale === 'en' ? 0.95 : 1,
     alternates: { languages },
   }))
 }

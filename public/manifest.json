@@ -1,13 +1,16 @@
 {
-  "name": "Alireza Sadjadipour",
-  "short_name": "Alireza Sadjadipour",
-  "description": "Full-stack software engineer with over a decade of experience building and shipping production web applications.",
+  "name": "علیرضا سجادی پور — توسعه‌دهنده ارشد فول‌استک و هوش مصنوعی",
+  "short_name": "علیرضا سجادی پور",
+  "description": "توسعه‌دهنده ارشد فول‌استک و سیستم‌های هوش مصنوعی با بیش از یک دهه تجربه. برنامه‌نویس فریلنسر پایتون و دیجی‌بی‌اس برای استخدام و همکاری پروژه‌ای — Alireza Sadjadipour, Senior Full-Stack & AI Systems Developer.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#080808",
   "theme_color": "#080808",
-  "lang": "en",
+  "lang": "fa",
+  "dir": "auto",
+  "categories": ["productivity", "portfolio", "developer"],
+  "id": "alirezasadjadipour-portfolio",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -40,7 +43,16 @@
       "sizes": "1200x630",
       "type": "image/jpeg",
       "form_factor": "wide",
-      "label": "Alireza Sadjadipour — Portfolio"
+      "label": "علیرضا سجادی پور — پرتفولیوی توسعه‌دهنده"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "رزومه و پرتفولیو",
+      "short_name": "رزومه",
+      "description": "مشاهده رزومه، پروژه‌ها و مهارت‌های علیرضا سجادی پور",
+      "url": "/fa/",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

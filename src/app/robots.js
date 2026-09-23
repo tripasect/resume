@@ -8,6 +8,8 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
+        // Keep internal / proposal pages out of search results.
+        disallow: ['/proposals/', '/_next/'],
       },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

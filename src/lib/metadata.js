@@ -111,8 +111,35 @@ export function buildMetadata(locale = 'en') {
       images: [SITE.ogImage],
     },
     other: {
+      // — Geographic targeting (Iran / Tehran) —
+      'geo.region': 'IR-16',
+      'geo.placename': 'Tehran',
+      'geo.country-name': 'Iran',
+      // — Dublin Core metadata —
+      'DC.title': title,
+      'DC.creator': SITE.name,
+      'DC.description': dict.meta.description,
+      'DC.language': meta.htmlLang,
+      'DC.subject': dict.meta.keywords.join(', '),
+      'DC.type': 'Text',
+      'DC.format': 'text/html',
+      'DC.identifier': `${SITE.url}${meta.path}`,
+      'DC.publisher': SITE.name,
+      'DC.rights': '© 2026 Alireza Sadjadipour',
+      // — Additional social / discovery —
+      'revisit-after': '7 days',
+      'rating': 'General',
+      'og:email': SITE.email,
+      'og:phone_number': SITE.phone,
+      'profile:username': 'tripasect',
       'msapplication-TileColor': SITE.themeColor,
       'msapplication-TileImage': '/icons/icon-192.png',
     },
+    links: [
+      {
+        rel: 'me',
+        href: SITE.github,
+      },
+    ],
   }
 }

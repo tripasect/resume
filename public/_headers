@@ -22,3 +22,8 @@
 
 /sitemap.xml
   Cache-Control: public, max-age=3600
+
+/proposals/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: private, no-store, no-cache
+
