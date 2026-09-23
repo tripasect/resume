@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروپوزال شمارهٔ ۳ — افزودن کاتالوگ ساختاریافته محصولات به پروژه دریاتامین</title>
+    <style>
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Light.woff2") format("woff2");
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Regular.woff2") format("woff2");
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Bold.woff2") format("woff2");
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Black.woff2") format("woff2");
+            font-weight: 900;
+        }
+
+
+        :root {
+            --navy: #000000;
+            --navy-soft: #f1f2f4;
+            --ink: #17202a;
+            --muted: #5e6875;
+            --line: #cfd6df;
+            --paper: #ffffff;
+            --soft: #f7f8fa;
+            --green: #256447;
+            --hero-bg: #080808;
+            --hero-fg: #F5F0E8;
+            --hero-fg-muted: rgba(245, 240, 232, 0.75);
+            --hero-fg-subtle: rgba(245, 240, 232, 0.28);
+            --hero-accent: #ff2760;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Alibaba", Tahoma, Arial, sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.75;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 0 3rem;
+            background: var(--paper);
+        }
+
+        /* ── Hero ── */
+        .header {
+            background: var(--hero-bg);
+            color: var(--hero-fg);
+            padding: 3.5rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        .header-art {
+            position: absolute;
+            inset: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            line-height: 1.25;
+            color: var(--hero-fg);
+            margin: 0 0 1.4rem;
+        }
+
+        h1 .accent { color: var(--hero-accent); }
+
+        .subtitle {
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--hero-fg-muted);
+            max-width: 520px;
+            margin-left: auto;
+            line-height: 1.6;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 1.8rem;
+            margin-top: 1.4rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--hero-fg-subtle);
+        }
+
+        /* ── Body ── */
+        .doc-body {
+            max-width: 74rem;
+            margin-inline: auto;
+            padding: 0 clamp(1.25rem, 4vw, 4rem);
+        }
+
+        .abstract {
+            margin: clamp(1.5rem, 4vw, 2.5rem) 0;
+            padding: 1rem 1.1rem;
+            border-right: 4px solid var(--navy);
+            background: var(--navy-soft);
+            text-align: justify;
+            font-size: 10.5pt;
+        }
+
+        .section { margin: clamp(1.75rem, 4vw, 2.75rem) 0; }
+
+        h2 {
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-size: 14.5pt;
+        }
+
+        p { margin-bottom: 8px; text-align: justify; }
+
+        strong { font-weight: 750; }
+
+        .muted { color: var(--muted); }
+
+        /* ── Scope grid ── */
+        .scope-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            margin-top: 16px;
+            background: var(--line);
+            border: 1px solid var(--line);
+        }
+
+        .scope-tile {
+            background: var(--paper);
+            padding: 20px 20px 16px;
+        }
+
+        .scope-tile:first-child {
+            background: var(--soft);
+        }
+
+        /* ── New module tile — full-width, accented ── */
+        .scope-tile--new {
+            grid-column: 1 / -1;
+            background: var(--soft);
+            border-top: 3px solid var(--hero-accent);
+            padding: 22px 22px 18px;
+        }
+
+        .tile-num {
+            font-size: 7.5pt;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .tile-num--new {
+            color: var(--hero-accent);
+        }
+
+        .tile-title {
+            font-size: 13pt;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .tile-body {
+            font-size: 9.5pt;
+            color: var(--ink);
+            line-height: 1.7;
+        }
+
+        .tile-body code {
+            font-family: monospace;
+            font-size: 0.88em;
+            background: var(--line);
+            padding: 0 4px;
+            border-radius: 3px;
+            color: var(--ink);
+        }
+
+        /* ── Technical notes list ── */
+        .tech-list {
+            margin: 10px 0 0;
+            padding-right: 1.1rem;
+            list-style: none;
+        }
+
+        .tech-list li {
+            font-size: 9.5pt;
+            color: var(--ink);
+            line-height: 1.7;
+            padding: 3px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tech-list li:last-child { border-bottom: none; }
+
+        .tech-list li::before {
+            content: "—";
+            margin-left: 0.5rem;
+            color: var(--muted);
+        }
+
+        /* ── Price ── */
+        .price-block {
+            margin: 24px 0 0;
+            padding: 26px 30px;
+            border: 2.5px solid var(--navy);
+            background: var(--soft);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .price-fig {
+            font-size: clamp(2.2rem, 6vw, 3.6rem);
+            font-weight: 900;
+            color: var(--navy);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .price-label {
+            margin-top: 5px;
+            font-size: 9pt;
+            color: var(--muted);
+        }
+
+        .price-detail {
+            font-size: 9.2pt;
+            color: var(--ink);
+            line-height: 1.85;
+            text-align: right;
+        }
+
+        .price-detail .old {
+            color: var(--muted);
+            text-decoration: line-through;
+            font-size: 8.5pt;
+        }
+
+        .price-detail .new-line {
+            font-weight: 700;
+        }
+
+        /* ── Payment ── */
+        .payment {
+            margin-top: 14px;
+            padding: 13px 16px;
+            background: var(--soft);
+            border-right: 4px solid var(--navy);
+            font-size: 9.5pt;
+        }
+
+        .payment p { margin-bottom: 4px; text-align: right; }
+        .payment p:last-child { margin-bottom: 0; }
+
+        /* ── Callout ── */
+        .callout {
+            margin: 20px 0 0;
+            padding: 13px 16px;
+            border: 1.5px solid var(--navy);
+            text-align: center;
+            font-size: 9.5pt;
+        }
+
+        .callout strong { color: var(--navy); }
+
+        /* ── Advisory note ── */
+        .advisory {
+            margin-top: 16px;
+            padding: 18px 22px;
+            background: var(--soft);
+            border: 1px solid var(--line);
+            border-right: 4px solid var(--muted);
+        }
+
+        .advisory-lead {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .advisory p {
+            font-size: 9.5pt;
+            color: var(--ink);
+            line-height: 1.75;
+            margin-bottom: 6px;
+            text-align: justify;
+        }
+
+        .advisory p:last-child { margin-bottom: 0; }
+
+        .advisory .verdict {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            font-size: 9pt;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 32px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 8.5pt;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .scope-grid { grid-template-columns: 1fr; }
+            .scope-tile--new { grid-column: auto; }
+            .price-block { flex-direction: column; align-items: flex-end; }
+            .price-detail { text-align: right; }
+        }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            body { font-size: 9.7pt; }
+            .container { padding: 0; box-shadow: none; }
+            .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 2rem 0 1.8rem; }
+            .header-inner, .doc-body { padding: 0 16mm; }
+            .scope-tile, .price-block, .payment, .callout, .advisory { break-inside: avoid; }
+            h2 { break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+<main class="container">
+
+    <header class="header">
+        <svg class="header-art" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <polygon transform="translate(-50 90) rotate(18) scale(1.35)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(70 260) rotate(-70) scale(0.55)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+            <polygon transform="translate(180 60) rotate(130) scale(0.8)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.05)" />
+            <polygon transform="translate(120 460) rotate(25) scale(1.1)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(280 330) rotate(-130) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+            <polygon transform="translate(480 430) rotate(-25) scale(0.7)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+            <polygon transform="translate(650 230) rotate(-95) scale(0.5)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.08)" />
+            <polygon transform="translate(840 350) rotate(145) scale(0.6)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.07)" />
+            <polygon transform="translate(940 120) rotate(-55) scale(1.2)" points="0,0 160,0 0,96" fill="rgba(245,240,232,0.06)" />
+        </svg>
+        <div class="header-inner">
+            <h1>
+                پروپوزال شمارهٔ ۳
+            </h1>
+            <p class="subtitle">
+                افزودن کاتالوگ‌های ساختاریافته و قابل خواندن توسط هوش مصنوعی
+                به برنامه پروژه دریاتامین — به‌انضمام تجدیدنظر در قیمت‌گذاری
+            </p>
+            <div class="meta">
+                <span>کارگزار: علیرضا سجادی پور</span>
+                <span>مخاطب: شرکت دریا تأمین</span>
+                <span>مهر ۱۴۰۵</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="doc-body">
+
+        <section class="abstract">
+            پس از بررسی‌های تازه شرکت، مشخص شده که ایجاد کاتالوگ‌های ساختاریافته و قابل خواندن توسط مدل‌های زبانی برای محصولات رنگ صنعتی می‌تواند سیگنال‌های LLMSO و سئوی سنتی را به‌طور هم‌زمان تقویت کند. این سند محور پنجمی را که به برنامه اضافه می‌شود توضیح می‌دهد، قیمت جدید را مشخص می‌کند و یادداشت‌های فنی لازم را ارائه می‌دهد.
+        </section>
+
+        <section class="section">
+            <h2>۱. آنچه انجام می‌شود</h2>
+            <p>پروژه اکنون از پنج محور تشکیل می‌شود. چهار محور پیشین بدون تغییر باقی می‌مانند؛ محور پنجم به آن‌ها اضافه شده است.</p>
+
+            <div class="scope-grid">
+                <div class="scope-tile">
+                    <div class="tile-num">محور اول</div>
+                    <div class="tile-title">جراحی سئو</div>
+                    <p class="tile-body">
+                        بررسی کامل سایت فارسی، آنالتیکس و ساختار فنی — شناسایی و اصلاح مشکلات سئوی تکنیکال، تقویت صفحات با ظرفیت رشد.
+                    </p>
+                </div>
+                <div class="scope-tile">
+                    <div class="tile-num">محور دوم</div>
+                    <div class="tile-title">حضور در جست‌وجوی هوش مصنوعی</div>
+                    <p class="tile-body">
+                        افزودن <code>llms.txt</code>، پیاده‌سازی Schema Markup (Product، Organization، FAQ)، بازنویسی محتوا در قالب پرسش‌وپاسخ صریح و تقویت سیگنال‌های E-E-A-T.
+                    </p>
+                </div>
+                <div class="scope-tile">
+                    <div class="tile-num">محور سوم</div>
+                    <div class="tile-title">محتوای انگلیسی</div>
+                    <p class="tile-body">
+                        بررسی و بهینه‌سازی مقالات انگلیسی سایت در همان فرآیند و با همان منطق — در دل پروژه، نه در کنار آن.
+                    </p>
+                </div>
+                <div class="scope-tile">
+                    <div class="tile-num">محور چهارم</div>
+                    <div class="tile-title">بازطراحی قالب وردپرس</div>
+                    <p class="tile-body">
+                        پوستهٔ اختصاصی بر اساس هویت بصری مورد نظر شرکت — سریع، واکنش‌گرا و هماهنگ با ساختار محتوای اصلاح‌شده.
+                    </p>
+                </div>
+
+                <div class="scope-tile scope-tile--new">
+                    <div class="tile-num tile-num--new">محور پنجم — جدید</div>
+                    <div class="tile-title">کاتالوگ ساختاریافته محصولات برای هوش مصنوعی</div>
+                    <p class="tile-body">
+                        برای  <strong>تا ۱۵ محصول </strong> دریاتامین، صفحهٔ کاتالوگ ساختاریافته و استاندارد تولید می‌شود. هر صفحه به‌گونه‌ای طراحی می‌شود که هم توسط موتورهای جست‌وجوی سنتی به‌خوبی ایندکس شود و هم توسط مدل‌های زبانی بزرگ (LLM) خوانده، تفسیر و استناد شود. بخش پرسش‌وپاسخ (Q&amp;A) برای هر محصول — بر اساس پرسش‌های واقعی خریداران صنعتی — در قالب <code>FAQPage</code> Schema و محتوای آشکار متنی هر دو پیاده می‌شود تا در جست‌وجوی AI و Featured Snippets گوگل ظاهر شود.
+                    </p>
+                    <ul class="tech-list">
+                        <li>صفحهٔ اختصاصی برای هر محصول با URL ثابت و slug بهینه‌شده برای کلیدواژه‌های صنعتی</li>
+                        <li>بخش Q&amp;A اختصاصی برای هر محصول با <code>FAQPage</code> Schema — پاسخ به پرسش‌هایی که خریداران صنعتی در ChatGPT، Perplexity و گوگل می‌پرسند</li>
+                        <li>ارجاع‌دهی متقاطع میان محصولات مرتبط برای تقویت ساختار لینک‌سازی داخلی</li>
+                        <li>به‌روزرسانی فایل <code>llms.txt</code> برای معرفی صریح کاتالوگ به خزنده‌های مدل‌های زبانی</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۲. هزینه</h2>
+
+            <div class="price-block">
+                <div class="price-detail">
+                    <span class="old">برنامه پیشین (چهار محور): ۵۰ میلیون تومان</span><br>
+                    <span class="new-line">افزودن محور پنجم — کاتالوگ ساختاریافته تا ۱۵ محصول</span><br>
+                    <span class="muted" style="font-size:8.5pt;">شامل داده‌های ساختاریافته، Q&A، Schema Markup و به‌روزرسانی llms.txt</span>
+                </div>
+                <div>
+                    <div class="price-fig">۶۰ میلیون تومان</div>
+                </div>
+            </div>
+
+            <div class="payment">
+                <p><strong>پرداخت:</strong> ۳۰٪ پس از انعقاد قرارداد — ۴۰٪ پس از ارائهٔ اولیه — ۳۰٪ پس از تحویل نهایی.</p>
+                <p class="muted">شرایط پرداخت همان‌طور که در پروپوزال شمارهٔ ۲ مقرر شد باقی می‌ماند.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>۳. مرامنامهٔ کاری</h2>
+            <p>گزارش‌دهی پروژه در دو یا سه جلسه صورت می‌گیرد — در قالب جلسه آنلاین با ارائه اسلاید یا ویدیو ضبط‌شده، بسته به ترجیح دریاتامین. هیچ کاری بدون ثبت و توضیح انجام نمی‌شود.</p>
+            <p>تعهد این همکاری بر کیفیت اجرا و صداقت در گزارش است. نتیجهٔ نهایی رتبه‌بندی در اختیار موتورهای جست‌وجو است — اما آنچه در اختیار ماست با دقت کامل انجام می‌شود.</p>
+
+            <div class="callout">
+                <strong>مسیر:</strong> تشخیص دقیق ← اصلاح مشکلات اصلی ← کاتالوگ‌سازی ساختاریافته ← طراحی و اجرا ← تحویل و گزارش‌دهی
+            </div>
+        </section>
+
+
+        <footer class="footer">
+            <p>دامنهٔ قطعی و نهایی خدمات در قرارداد تثبیت می‌شود. &nbsp;|&nbsp; مهر ۱۴۰۵</p>
+        </footer>
+
+    </div>
+</main>
+</body>
+</html>
