@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قرارداد خدمات بهینه‌سازی سئو، هوش مصنوعی و طراحی وب‌سایت — دریا تأمین</title>
+    <style>
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Light.woff2") format("woff2");
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Regular.woff2") format("woff2");
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Bold.woff2") format("woff2");
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Black.woff2") format("woff2");
+            font-weight: 900;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        :root {
+            --primary: #111827;
+            --primary-dark: #000000;
+            --ink: #1f2937;
+            --muted: #4b5563;
+            --line: #cbd5e1;
+            --line-subtle: #e2e8f0;
+            --paper: #ffffff;
+            --soft: #f8fafc;
+            --accent: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #e2e8f0;
+            color: var(--ink);
+            font-family: "Alibaba", Tahoma, Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .contract-wrapper {
+            max-width: 210mm;
+            margin: 20px auto;
+            background: var(--paper);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Page Layout */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            max-height: 297mm;
+            padding: 16mm 18mm 14mm 18mm;
+            margin: 0 auto;
+            position: relative;
+            background: var(--paper);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header / Framing */
+        .contract-header {
+            border-bottom: 2px solid var(--primary-dark);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .contract-title-group h1 {
+            font-size: 14pt;
+            font-weight: 900;
+            color: var(--primary-dark);
+            letter-spacing: -0.01em;
+            margin-bottom: 2px;
+        }
+
+        .contract-title-group .contract-subtitle {
+            font-size: 8.5pt;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .contract-meta {
+            text-align: left;
+            font-size: 8pt;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .contract-meta span {
+            display: block;
+        }
+
+        /* Clauses & Headings */
+        .clause {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        .clause-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--primary-dark);
+            border-right: 3px solid var(--primary-dark);
+            padding-right: 7px;
+            margin-bottom: 6px;
+            background: var(--soft);
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        p {
+            margin-bottom: 6px;
+            text-align: justify;
+            font-size: 9pt;
+            line-height: 1.6;
+        }
+
+        /* Parties block */
+        .parties-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .party-box {
+            background: var(--soft);
+            border: 1px solid var(--line-subtle);
+            border-top: 2px solid var(--primary-dark);
+            padding: 8px 10px;
+            font-size: 8.5pt;
+            line-height: 1.5;
+        }
+
+        .party-box .party-role {
+            font-weight: 800;
+            font-size: 9pt;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+        }
+
+        /* Scope of Work Table / Details */
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 6px 0 10px;
+            font-size: 8.5pt;
+            line-height: 1.45;
+        }
+
+        .table-custom th, .table-custom td {
+            border: 1px solid var(--line);
+            padding: 5px 8px;
+            text-align: right;
+            vertical-align: top;
+        }
+
+        .table-custom th {
+            background: var(--soft);
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 8.5pt;
+        }
+
+        .table-custom td.num {
+            text-align: center;
+            font-weight: 700;
+            width: 6%;
+        }
+
+        .table-custom td.title {
+            font-weight: 700;
+            width: 25%;
+            color: var(--primary-dark);
+        }
+
+        ul.clause-list {
+            margin: 4px 16px 6px 0;
+            font-size: 8.8pt;
+            line-height: 1.55;
+        }
+
+        ul.clause-list li {
+            margin-bottom: 3px;
+        }
+
+        /* Financial summary block */
+        .financial-box {
+            background: var(--soft);
+            border: 1.5px solid var(--primary-dark);
+            padding: 8px 12px;
+            margin: 8px 0;
+        }
+
+        .financial-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9pt;
+            margin-bottom: 0;
+        }
+
+        .financial-amount {
+            font-weight: 900;
+            font-size: 11pt;
+            color: var(--primary-dark);
+        }
+
+        /* Signatures block */
+        .signatures-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+        }
+
+        .sig-box {
+            text-align: center;
+            min-height: 95px;
+            border: 1px dashed var(--line);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--soft);
+        }
+
+        .sig-title {
+            font-weight: 700;
+            font-size: 9pt;
+            color: var(--primary-dark);
+        }
+
+        .sig-caption {
+            font-size: 8pt;
+            color: var(--muted);
+        }
+
+        /* Footer */
+        .page-footer {
+            border-top: 1px solid var(--line-subtle);
+            padding-top: 6px;
+            font-size: 7.5pt;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Print formatting */
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                background: none;
+                margin: 0;
+                padding: 0;
+            }
+            .contract-wrapper {
+                box-shadow: none;
+                margin: 0;
+                max-width: none;
+                width: 210mm;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                min-height: 297mm;
+                max-height: 297mm;
+                padding: 16mm 18mm 14mm 18mm;
+                margin: 0;
+                page-break-after: always;
+                break-after: page;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .page:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contract-wrapper">
+
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="page-content">
+            <header class="contract-header">
+                <div class="contract-title-group">
+                    <h1>قرارداد ارائـه خـدمات دیجیتال و سـئو</h1>
+                    <div class="contract-subtitle">بهینه‌سازی برای موتورهای جستجو، خزنده‌های هوش مصنوعی و بازطراحی وب‌سایت</div>
+                </div>
+                <div class="contract-meta">
+                    <span><strong>شماره قرارداد:</strong> DT-1405/07-V3</span>
+                    <span><strong>تاریخ انعقاد:</strong> مهرماه ۱۴۰۵</span>
+                    <span><strong>نسخه مبنا:</strong> پروپوزال ۳</span>
+                </div>
+            </header>
+
+            <div class="clause">
+                <p>این قرارداد در تاریخ فوق، بر اساس توافقات حاصله و پروپوزال تأییدشده شمارهٔ ۳، فی‌مابین طرفین زیر منعقد و طرفین ملزم به رعایت کلیه مفاد و تعهدات آن گردیدند:</p>
+            </div>
+
+            <div class="parties-grid">
+                <div class="party-box">
+                    <div class="party-role">طرف اول (کارفرما):</div>
+                    <p><strong>شرکت دریا تأمین</strong></p>
+                    <p>به مدیریت و نمایندگی تام‌الاختیار مشخص‌شده در پروژه.</p>
+                </div>
+                <div class="party-box">
+                    <div class="party-role">طرف دوم (مجری / کارگزار):</div>
+                    <p><strong>جناب آقای علیرضا سجادی‌پور</strong></p>
+                    <p>متخصص و کارگزار راهبردی سئو، LLMSO و توسعه وب‌سایت.</p>
+                </div>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۱ — موضوع قرارداد و دامنه خدمات</div>
+                <p>موضوع قرارداد عبارت است از ارائه خدمات تخصصی سئو، بهینه‌سازی موتورهای هوش مصنوعی و بازطراحی قالب وب‌سایت شرکت دریا تأمین در قالب <strong>۵ محور اختصاصی</strong> به شرح جدول زیر:</p>
+
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th class="num">ردیف</th>
+                            <th class="title">محور اجرایی</th>
+                            <th>شرح خدمات و جزئیات پیاده‌سازی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="num">۱</td>
+                            <td class="title">جراحی سئو (Technical SEO)</td>
+                            <td>تحلیل جامع ساختار سایت فارسی و داده‌های آنالیتیکس؛ شناسایی و رفع موانع فنی، تداخل‌ها و هم‌پوشانی‌های محتوایی؛ اصلاح ساختار صفحات واجد ظرفیت رشد.</td>
+                        </tr>
+                        <tr>
+                            <td class="num">۲</td>
+                            <td class="title">بهینه‌سازی هوش مصنوعی (LLMSO)</td>
+                            <td>ایجاد و تنظیم فایل <code>llms.txt</code>، پیاده‌سازی استانداردهای ساختاریافته (Schema Markup از جمله Organization، Product و FAQ)، بازنویسی بخش‌های محتوایی در فرمت Q&A صریح و تقویت سیگنال‌های E-E-A-T جهت پاسخ‌دهی در مدل‌های زبانی (ChatGPT، Perplexity و Google AI).</td>
+                        </tr>
+                        <tr>
+                            <td class="num">۳</td>
+                            <td class="title">بهینه‌سازی محتوای انگلیسی</td>
+                            <td>بررسی، بازنگری ساختاری و بهینه‌سازی مقالات و بخش‌های انگلیسی وب‌سایت در راستای همسویی با استانداردهای سئو و هوش مصنوعی.</td>
+                        </tr>
+                        <tr>
+                            <td class="num">۴</td>
+                            <td class="title">بازطراحی قالب اختصاصی وردپرس</td>
+                            <td>طراحی و پیاده‌سازی پوستهٔ اختصاصی هماهنگ با هویت بصری مدرن و الهام‌بخش برند، سبک، کاملاً واکنش‌گرا (موبایل و دسکتاپ) و منطبق بر معماری محتوایی جدید.</td>
+                        </tr>
+                        <tr>
+                            <td class="num">۵</td>
+                            <td class="title">کاتالوگ ساختاریافته هوش مصنوعی</td>
+                            <td>تولید صفحات ساختاریافته کاتالوگ برای <strong>تا ۱۵ محصول</strong> منتخب (با URL بهینه و استاندارد)، پیاده‌سازی پرسش و پاسخ‌های صنعتی تخصصی همراه با اسکیما <code>FAQPage</code>، ارجاع‌دهی متقاطع محصولات و معرفی مستقیم کاتالوگ در <code>llms.txt</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۲ — مدت زمان اجرا، مهلت فنی و ضمانت حسن زمان‌بندی</div>
+                <p>۱-۲. مدت زمان پایه پیش‌بینی‌شده برای اجرای کامل محورهای موضوع قرارداد برابر با <strong>۴ الی ۶ هفته کاری</strong> از تاریخ پرداخت مرحله اول (پیش‌پرداخت) و تکمیل دسترسی‌های لازم خواهد بود.</p>
+                <p>۲-۲. به منظور تضمین کیفیت فنی، تست دقیق خروجی‌ها و بازبینی‌های لازم، <strong>تا ۳ هفته مهلت فنی و منعطف (Wiggle Room)</strong> علاوه بر بازه پایه در اختیار مجری قرار دارد (مجموعاً تا سقف ۹ هفته از شروع رسمی پروژه).</p>
+                <p>۳-۲. در صورت عدم تکمیل تعهدات پس از پایان هفتهٔ نهم، به ازای هر هفته تأخیر غیرمجاز از سوی مجری، مبلغ <strong>۱,۰۰۰,۰۰۰ تومان (یک میلیون تومان)</strong> به عنوان خسارت تأخیر محاسبه و از مبلغ پرداختی مرحله دوم کسر خواهد شد.</p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>قرارداد خدمات بهینه‌سازی سئو و بازطراحی — شرکت دریا تأمین</span>
+            <span>صفحه ۱ از ۲</span>
+        </footer>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="page-content">
+            <div class="clause">
+                <div class="clause-title">ماده ۳ — مبلغ قرارداد و شرایط پرداخت</div>
+                <p>مبلغ کل قرارداد برای اجرای تمام و کمال ۵ محور فوق‌الذکر، معادل <strong>۶۰,۰۰۰,۰۰۰ تومان (شصت میلیون تومان تمام)</strong> تعیین گردید.</p>
+                
+                <div class="financial-box">
+                    <div class="financial-row">
+                        <span><strong>مبلغ کل قرارداد:</strong></span>
+                        <span class="financial-amount">۶۰,۰۰۰,۰۰۰ تومان</span>
+                    </div>
+                </div>
+
+                <p>نحوه پرداخت حق‌الزحمه بر اساس توافق طرفین در ۲ مرحله به شرح ذیل انجام می‌پذیرد:</p>
+                <ul class="clause-list">
+                    <li><strong>مرحله اول (پیش‌پرداخت - ۳۰٪):</strong> معادل <strong>۱۸,۰۰۰,۰۰۰ تومان (هجده میلیون تومان)</strong> هم‌زمان با امضا و مبادله قرارداد و پیش از شروع عملیات اجرایی.</li>
+                    <li><strong>مرحله دوم (تسویه نهایی - ۷۰٪):</strong> معادل <strong>۴۲,۰۰۰,۰۰۰ تومان (چهل و دو میلیون تومان)</strong> پس از تکمیل ۵ محور، تحویل نهایی خروجی‌های پروژه و ارائه جلسه/گزارش پایانی.</li>
+                </ul>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۴ — تعهدات مجری</div>
+                <ul class="clause-list">
+                    <li>مجری متعهد می‌گردد خدمات موضوع قرارداد را با بالاترین کیفیت فنی، منطبق بر اصول نوین بهینه‌سازی و سئوی ساختاریافته پیاده‌سازی نماید.</li>
+                    <li>ارائه گزارش پیشرفت کار در ۲ الی ۳ جلسه آنلاین (همراه با اسلاید) یا ویدیوی ضبط‌شده تفصیلی بنا به ترجیح و هماهنگی با کارفرما.</li>
+                    <li>حفظ محرمانگی کامل داده‌ها، آمار، اطلاعات ورود به پنل‌ها و دارایی‌های دیجیتال کارفرما.</li>
+                </ul>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۵ — تعهدات کارفرما</div>
+                <ul class="clause-list">
+                    <li>ارائه به‌موقع کلیه دسترسی‌های لازم شامل هاست، وردپرس، Google Search Console و Google Analytics در ابتدای پروژه.</li>
+                    <li>تأییدیه مشخصات فنی محصولات و پاسخ به پرسش‌های فنی محتوایی در خصوص رنگ‌های صنعتی در زمان مقتضی.</li>
+                    <li>پرداخت مبالغ قرارداد در مواعد تعیین‌شده در ماده ۳ قرارداد.</li>
+                </ul>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۶ — حدود مسئولیت و شفافیت اجرایی</div>
+                <p>تعهد مجری متمرکز بر کیفیت اجرا، رفع کامل معایب فنی، کدنویسی اصولی اسکیما، تدوین استاندارد محتوا و ارائه گزارش‌های شفاف است. از آنجا که رتبه‌بندی نهایی در موتورهای جستجو و مدل‌های زبانی متأثر از الگوریتم‌های شخص ثالث و متغیرهای خارجی است، تضمین رتبه قطعی یا حجم ثابت ترافیک از حیطه تعهد خارج بوده و ملاک حسن اجرای قرارداد، تطابق کامل خروجی با الزامات فنی ماده ۱ می‌باشد.</p>
+            </div>
+
+            <div class="clause">
+                <div class="clause-title">ماده ۷ — نسخ قرارداد</div>
+                <p>این قرارداد در ۷ ماده، در ۲ نسخه متحدالشکل و دارای اعتبار یکسان تنظیم گردیده و پس از امضای طرفین، برای طرفین لازم‌الاجرا خواهد بود.</p>
+            </div>
+
+            <div class="signatures-grid">
+                <div class="sig-box">
+                    <div class="sig-title">کارفرما</div>
+                    <div class="sig-caption">شرکت دریا تأمین<br>مهر و امضای مجاز</div>
+                </div>
+                <div class="sig-box">
+                    <div class="sig-title">مجری / کارگزار</div>
+                    <div class="sig-caption">علیرضا سجادی‌پور<br>امضا</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <span>قرارداد خدمات بهینه‌سازی سئو و بازطراحی — شرکت دریا تأمین</span>
+            <span>صفحه ۲ از ۲</span>
+        </footer>
+    </div>
+
+</div>
+
+</body>
+</html>
