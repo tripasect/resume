@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>گزارش ایتریشن</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Light.woff2") format("woff2");
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Regular.woff2") format("woff2");
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Bold.woff2") format("woff2");
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: "Alibaba";
+            src: url("/fonts/Alibaba/Alibaba-Black.woff2") format("woff2");
+            font-weight: 900;
+        }
+@page { size: A4; margin: 0; }
+:root {
+  --primary: #111827; --primary-dark: #000; --ink: #1f2937; --muted: #4b5563;
+  --line: #cbd5e1; --line-subtle: #e2e8f0; --paper: #fff; --soft: #f8fafc;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #e2e8f0; color: var(--ink);
+  font-family: "Alibaba", Tahoma, Arial, sans-serif;
+  font-size: 9pt; line-height: 1.65; -webkit-font-smoothing: antialiased;
+}
+.wrapper { max-width: 210mm; margin: 20px auto; background: var(--paper); box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+.page {
+  width: 210mm; height: 297mm; max-height: 297mm; padding: 16mm 18mm 14mm;
+  margin: 0 auto; position: relative; background: var(--paper);
+  display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+}
+.page + .page { border-top: 1px dashed var(--line); }
+.page-content { flex: 1; display: flex; flex-direction: column; }
+
+.header {
+  border-bottom: 2px solid var(--primary-dark); padding-bottom: 8px; margin-bottom: 12px;
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 12px;
+}
+.header h1 { font-size: 14pt; font-weight: 900; color: var(--primary-dark); letter-spacing: -.01em; margin-bottom: 2px; }
+.subtitle { font-size: 8.5pt; color: var(--muted); }
+.meta { text-align: left; font-size: 8pt; color: var(--muted); line-height: 1.4; white-space: nowrap; }
+.meta span { display: block; }
+
+.clause { margin-bottom: 10px; text-align: justify; }
+.clause-title {
+  font-size: 10pt; font-weight: 700; color: var(--primary-dark);
+  border-right: 3px solid var(--primary-dark); padding: 2px 7px 2px 0; margin-bottom: 6px; background: var(--soft);
+}
+p { margin-bottom: 6px; text-align: justify; font-size: 9pt; line-height: 1.6; }
+a { color: var(--primary-dark); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+code { direction: ltr; unicode-bidi: embed; font-family: Consolas, Menlo, monospace; font-size: 8.5pt; background: var(--soft); border: 1px solid var(--line-subtle); padding: 0 4px; }
+
+.table-custom { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 8.5pt; line-height: 1.45; }
+.table-custom th, .table-custom td { border: 1px solid var(--line); padding: 5px 8px; text-align: right; vertical-align: top; }
+.table-custom th { background: var(--soft); font-weight: 700; color: var(--primary-dark); }
+.table-custom td.num { text-align: center; font-weight: 700; width: 6%; }
+.table-custom td.title { font-weight: 700; width: 38%; color: var(--primary-dark); }
+
+.note-box { background: var(--soft); border: 1.5px solid var(--primary-dark); padding: 8px 12px; margin: 8px 0; }
+.note-box p { margin-bottom: 0; }
+.note-box .label { font-weight: 900; color: var(--primary-dark); margin-bottom: 2px; font-size: 9pt; }
+
+.footer {
+  border-top: 1px solid var(--line-subtle); padding-top: 6px; font-size: 7.5pt; color: var(--muted);
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+@media screen and (max-width: 800px) {
+  .wrapper { margin: 0; box-shadow: none; }
+  .page { width: 100%; height: auto; max-height: none; padding: 20px 16px; overflow: visible; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .meta { text-align: right; white-space: normal; }
+}
+@media print {
+  html, body { width: 210mm; background: none; }
+  :root { padding: 0; }
+  .wrapper { box-shadow: none; margin: 0; max-width: none; width: 210mm; }
+  .page { margin: 0; page-break-after: always; break-after: page; break-inside: avoid; border-top: 0; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="page-content">
+    <header class="header">
+      <div>
+        <h1>گزارش ایتریشن #۳</h1>
+        <div class="subtitle">یوزر-اپ، پرووایدر-اپ، بکند و پنل ادمین</div>
+      </div>
+      <div class="meta">
+        <span><strong>تاریخ:</strong> ۲۹ مهر ۱۴۰۵</span>
+        <span><strong>وضعیت:</strong> ایتریشن تکمیل شد</span>
+      </div>
+    </header>
+
+    <div class="clause">
+      <p>ایتریشنم رو تموم کردم. این ایتریشن بیشتر تست و درست‌کردن باگ بود. گزارش کارها:</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">پنل ادمین راحت‌تر شد</div>
+      <p>توی پنل ادمین، برای اپراتور و سوپریوزر آپلود عکس و ساخت خودکار شناسه کار نمی‌کرد. درست شد. الان برای دسته، پروفایل، استوری و ایونت می‌شه عکس آپلود کرد؛ فیلدهای مرتبط هم سرچ می‌شن.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">دستیار فارسی توی ادمین</div>
+      <p>یه چت فارسی فقط برای سوپریوزر گذاشتم (دکمهٔ ؟ پایین سمت چپ). فقط سؤال جواب می‌ده؛ چیزی رو عوض نمی‌کنه. با هر دیپلوی، اطلاعاتش از خود بکند دوباره ساخته می‌شه تا کهنه نمونه.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">عکس دسته با Save پاک می‌شد</div>
+      <p>اگه دسته‌ای رو باز می‌کردی و بدون تغییر ذخیره می‌کردی، عکسش پاک می‌شد. درست شد. همین مشکل برای ایونت، استوری، عکس پروفایل و عکس محصول هم بسته شد.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">عکس کارت ملی توی ادمین</div>
+      <p>عکس جلو و پشت کارت ملی توی پنل ادمین لود نمی‌شد. لینک‌ها درست شدن و الان باز می‌شن.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">دستهٔ آموزش توی پرووایدر-اپ</div>
+      <p>دستهٔ «آموزش» رو از ادمین اضافه کرده بودیم. API می‌فرستادش، ولی توی فرم KYC پرووایدر دیده نمی‌شد؛ چون فرانت فقط یه لیست ثابت از دسته‌ها رو قبول می‌کرد. همون باگ توی یوزر-اپ هم بود. هر دو رو برداشتم تا هر دسته‌ای که ادمین بسازه بیاد بالا.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">یادداشت محل و تنظیمات ارائه</div>
+      <p>وقتی محل رو ادیت می‌کردی، فیلد یادداشت خالی می‌اومد در حالی که توی API پر بود — درست شد. تنظیمات نحوهٔ ارائه هم API درست ذخیره می‌کرد ولی صفحه می‌گفت بارگذاری ناموفق؛ یه کال الکی حذف شد و درست کار می‌کنه.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">اضافه کردن عکس، سرویس رو می‌انداخت</div>
+      <p>اگه به سرویس عکس اضافه می‌کردی، کل سرویس از اپ عمومی محو می‌شد تا ادمین دوباره تأییدش کنه. الان این‌طور نیست: خود سرویس سر جاش می‌مونه؛ فقط عکس‌های جدید منتظر تأیید می‌شن. سرویسی که قبلاً افتاده رو یک‌بار توی ادمین دوباره تأیید کنید.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">comment به‌جای review</div>
+      <p>طبق تصمیم تیم، مدل قدیمی review رو کنار گذاشتیم و رفتیم سراغ comment. یوزر-اپ دیگه به مسیر کهنه نمی‌زنه؛ اینباکس پرووایدر هم روی کامنت‌ها اومد.</p>
+    </div>
+
+
+  <div class="clause">
+    <div class="clause-title">تقویم رزرو</div>
+    <p>تقویم یوزر-اپ بعد از گرفتن داده روی لودینگ گیر می‌کرد. درست شد. تست از <a href="https://lotfipour-user-app.darkube.ir/booking/6f6df793-a5fd-4534-b672-2acdcb950ce1/schedule?locationId=6058c728-642d-4b42-b622-63479cf8a1ba&date=2026-10-21" target="_blank" rel="noopener">این لینک</a>.</p>
+    <p>ساعت‌ها توی فرانت شیفت می‌شدن به UTC. الان همون Asia/Tehranـی که بک می‌فرسته نشون داده می‌شه.</p>
+  </div>
+
+  <div class="clause">
+    <div class="clause-title">مهمان می‌دید، لاگین‌شده ۴۰۴ می‌گرفت</div>
+    <p>بدون لاگین، جزئیات آفرینگ می‌اومد. با لاگین (اگه اکانت ارائه‌دهنده هم داشتی) ۴۰۴ می‌دادی. بکند اشتباه فکر می‌کرد فقط باید آفرینگ مال خودت رو ببینی. درست شد: هر آفرینگ قابل‌رزرو برای همه دیده می‌شه.</p>
+  </div>
+  </div>
+
+  <footer class="footer">
+    <span>گزارش ایتریشن · صفحه ۱ از ۲</span>
+    <span>مهرماه ۱۴۰۵</span>
+  </footer>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="page-content">
+    <header class="header">
+      <div>
+        <h1>گزارش ایتریشن #۳</h1>
+        <div class="subtitle">ادامه · رزرو، پرداخت و جمع‌بندی</div>
+      </div>
+      <div class="meta">
+        <span><strong>تاریخ:</strong> ۲۹ مهر ۱۴۰۵</span>
+        <span><strong>وضعیت:</strong> ایتریشن تکمیل شد</span>
+      </div>
+    </header>
+
+    <div class="clause">
+      <div class="clause-title">رزرو به <code>/services/undefined/</code> می‌زد</div>
+      <p>تو مرحلهٔ اول رزرو، اپ نمی‌تونست شناسهٔ سرویس رو از جواب API بخونه و درخواست خراب می‌فرستاد. درست شد. اون <code>/accounts/me</code> بدون لاگین که جواب خالی می‌ده هم طبیعیه و جلوی رزرو رو نمی‌گیره.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">چک‌اوت و مرحلهٔ بررسی نهایی</div>
+      <p>مسیر درست رزرو (<code>/reservations</code>) با یه مرج اشتباه دوباره برگشته بود به مسیر قدیمی (<code>/bookings</code>) و ۴۰۴ می‌داد — دوباره درستش کردم. بعدش صفحه روی تخفیف کرش می‌کرد چون قیمت رو از جواب API درست نمی‌خوند؛ اون هم درست شد.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">برگشت از درگاه پرداخت</div>
+      <p>چند تا مشکل پشت هم بود و همه درست شدن: پرداخت موفق روی صفحه می‌موند و جلو نمی‌رفت؛ بعد از برگشت از درگاه گاهی می‌فرستادت لاگین؛ پرداخت ناموفق هم اشتباهی می‌رفت لاگین. الان موفق مستقیم می‌ره صفحهٔ موفقیت، ناموفق هم صفحهٔ ناموفق رو نشون می‌ده.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">چی دیپلوی شد</div>
+      <p>بکند، یوزر-اپ، پرووایدر-اپ و گیت‌وی همه پوش و دیپلوی شدن.</p>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">لینک تست</div>
+      <p>رزرو: <a href="https://lotfipour-user-app.darkube.ir/booking/6f6df793-a5fd-4534-b672-2acdcb950ce1/fulfillment?locationId=6058c728-642d-4b42-b622-63479cf8a1ba" target="_blank" rel="noopener">شروع رزرو</a> · سرویس: <a href="https://lotfipour-user-app.darkube.ir/services/af8b6a3c-2546-45a3-a3d2-2836f0b85663?offeringId=6f6df793-a5fd-4534-b672-2acdcb950ce1#overview" target="_blank" rel="noopener">صفحهٔ سرویس</a> · ادمین دسته: <a href="https://api-liwi.darkube.ir/admin/product/category/" target="_blank" rel="noopener">دسته‌ها</a></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>گزارش ایتریشن · صفحه ۲ از ۲</span>
+    <span>مهرماه ۱۴۰۵</span>
+  </footer>
+</div>
+
+
+
+</div>
+</body>
+</html>

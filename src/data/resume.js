@@ -14,7 +14,7 @@ export const SITE = {
   alternateName: 'علیرضا سجادی پور',
   email: 'hello@alirezasadjadipour.ir',
   phone: '+989387247153',
-  phoneDisplay: '+98 938 724 7153',
+  phoneDisplay: '+98 991 576 4792',
   github: 'https://github.com/tripasect',
   addressCountry: 'IR',
   alumniOf: 'University of Tehran',
@@ -49,7 +49,7 @@ export const fullStackProjects = [
     name: 'BlipMatch!',
     logotype: '/logotypes/BlipMatch.svg',
     tech: 'Python · Django · Celery · Asyncio · Redis · PostgreSQL · Telegram OAuth · Vue 3 · Pinia · Vue Router · Rive · Lottie · Three.js · i18n',
-    href: 'https://t.me/blipmatchbot',
+    href: 'https://t.me/blipmatchsocialbot',
   },
   {
     id: 'nhpmentor',
